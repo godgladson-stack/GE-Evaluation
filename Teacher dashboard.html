@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .details-box { border: 1px solid #ccc; padding: 15px; width: 300px; border-radius: 5px; }
+        button { padding: 10px 15px; font-size: 16px; cursor: pointer; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <h2>Teacher Dashboard</h2>
+
+    <div class="details-box">
+        <h3>Teacher Details</h3>
+        <p><strong>Teacher ID:</strong> <span id="teacherIdDisplay"></span></p>
+        <p><strong>Assigned Details:</strong> <span id="teacherDetailsDisplay"></span></p>
+    </div>
+
+    <button onclick="goToNext()">Next</button>
+
+    <script>
+        const teacherID = localStorage.getItem("loggedInTeacher");
+        const teacherDetails = localStorage.getItem("assignedTeacher_" + teacherID);
+
+        document.getElementById("teacherIdDisplay").innerText = teacherID;
+        document.getElementById("teacherDetailsDisplay").innerText = teacherDetails || "No details assigned";
+
+        function goToNext() {
+            window.location.href = "student_details.html";
+        }
+    </script>
+
+</body>
+</html>
