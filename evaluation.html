@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Paper Evaluation</title>
+</head>
+<body>
+<div id="evaluationContent">
+ <p>Assigned Teacher: <span id="displayTeacher"></span></p>
+ <p>Assigned Paper: <span id="displayPaper"></span></p>
+</div>
+
+<script>
+ document.getElementById("displayTeacher").textContent = localStorage.getItem("assignedTeacher");
+ document.getElementById("displayPaper").textContent = localStorage.getItem("assignedPaper");
+</script>
+
+<h2>Evaluate Student Paper</h2>
+<div style="border:1px solid #ccc; padding:20px; width:500px;">
+ <h3>Student Paper Content</h3>
+ <img id="studentPaperImage" src="paper_image.jpg" alt="Student Paper" style="width:100%;">
+</div>
+
+<script>
+ let savedPaper = localStorage.getItem("studentPaperBase64");
+ if (savedPaper) {
+  document.getElementById("studentPaperImage").src = savedPaper;
+ }
+</script>
+
+<label>Marks:</label>
+<input type="number" id="marks">
+<button type="button" onclick="submitMarks()">Submit Evaluation</button>
+
+<script>
+ function submitMarks() {
+  let marks = document.getElementById("marks").value;
+  localStorage.setItem("studentMarks", marks);
+  alert("Marks submitted!");
+ }
+</script>
+</body>
+</html>

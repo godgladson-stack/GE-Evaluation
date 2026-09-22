@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h2>Administrator Portal</h2>
+
+    <div>
+        <h3>Dashboard Overview</h3>
+        <p>Active Teachers: 5 | Pending Papers: 12</p>
+    </div>
+
+    <div>
+        <h3>Assign Papers</h3>
+<form id="assignForm">
+  <label>Select Teacher:</label>
+  <select id="teacher">
+    <option value="Teacher1">Manikandan</option>
+    <option value="Teacher2">Gladson</option>
+  </select>
+  <br><br>
+  <label>Select Paper:</label>
+  <select id="paper">
+    <option value="Paper1">Paper 1</option>
+    <option value="Paper2">Paper 2</option>
+    <option value="Paper3">Paper 3</option>
+  </select>
+  <br><br>
+  <button type="button" onclick="assign()">Assign</button>
+</form>
+
+<script>
+  function assign() {
+    let teacher = document.getElementById("teacher").value;
+    let paper = document.getElementById("paper").value;
+    localStorage.setItem("assignedTeacher", teacher);
+    localStorage.setItem("assignedPaper", paper);
+    alert("Paper assigned!");
+  }
+
+<script>
+function assignTeacher() {
+    var teacher = document.getElementById("teacher").value;
+    var paper = document.getElementById("paper").value;
+    
+    if (paper === "") {
+        alert("Please select a paper first!");
+        return;
+    }
+    
+    localStorage.setItem("assignedTeacher", teacher);
+    localStorage.setItem("assignedPaper", paper);
+    alert("Paper assigned!");
+}
+}
+</script>
+<form id="uploadForm">
+ <label>Upload Student Paper:</label>
+ <input type="file" id="paperInput" accept="image/*">
+ <button type="button" onclick="uploadPaper()">Upload Paper</button>
+</form>
+
+<script>
+ function uploadPaper() {
+ let fileInput = document.getElementById('paperInput').files[0];
+ let reader = new FileReader();
+
+ reader.onload = function(e) {
+ localStorage.setItem("studentPaperBase64", e.target.result);
+ alert("Paper uploaded and saved!");
+ };
+
+ reader.readAsDataURL(fileInput);
+ }
+</script>
+        </form>
+    </div>
+
+    <div>
+        <h3>Review Evaluations</h3>
+        <p>View completed evaluations and assign final grades.</p>
+    </div>
+</body>
+</html>

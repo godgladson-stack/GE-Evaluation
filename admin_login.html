@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Admin Login</title>
+</head>
+<body>
+ <h2>Admin Login</h2>
+ <form onsubmit="return validateLogin()">
+ <label>Username:</label>
+ <input type="text" id="username">
+ <br>
+ <label>Password:</label>
+ <input type="password" id="password">
+ <br>
+ <button type="submit">Login</button>
+ </form>
+
+ <script>
+ function validateLogin() {
+ var user = document.getElementById("username").value;
+ var pass = document.getElementById("password").value;
+
+ if (user === "admin" && pass === "123") {
+ window.location.href = "admin.html";
+ return false;
+ } else {
+ alert("Invalid username or password.");
+ return false;
+ }
+ }
+ </script>
+</body>
+</html>
