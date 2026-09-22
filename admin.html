@@ -16,15 +16,14 @@
 <form id="assignForm">
   <label>Select Teacher:</label>
   <select id="teacher">
-    <option value="Teacher1">Manikandan</option>
-    <option value="Teacher2">Gladson</option>
+    <option value="Teacher1">User2601201</option>
+    <option value="Teacher2">User2601202</option>
   </select>
   <br><br>
   <label>Select Paper:</label>
   <select id="paper">
     <option value="Paper1">Paper 1</option>
     <option value="Paper2">Paper 2</option>
-    <option value="Paper3">Paper 3</option>
   </select>
   <br><br>
   <button type="button" onclick="assign()">Assign</button>
@@ -80,6 +79,16 @@ function assignTeacher() {
     <div>
         <h3>Review Evaluations</h3>
         <p>View completed evaluations and assign final grades.</p>
+        <script>
+    function submitAssignment() {
+        let teacher = document.getElementById("teacherSelect").value;
+        let paper = document.getElementById("paperSelect").value;
+        
+        localStorage.setItem("assignedTeacher", teacher);
+        localStorage.setItem("assignedPaper", paper);
+        alert("Assignment submitted to the teacher!");
+    }
+</script>
     </div>
 </body>
 </html>
