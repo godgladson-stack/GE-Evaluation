@@ -5,7 +5,6 @@
 </head>
 <body>
     <h2>Teacher Portal</h2>
-    <!-- Form removed to handle submission via JS -->
     <label>Username:</label>
     <br>
     <input type="text" id="username">
@@ -22,8 +21,11 @@
             let user = document.getElementById("username").value;
             let pass = document.getElementById("password").value;
 
-            // குறிப்பிட்ட யூசர்நேம் மற்றும் பாஸ்வேர்டை இங்கே மாற்றலாம்
             if (user === "User2601201" && pass === "2601201") {
+                // லாகின் செய்த டீச்சர் ஐடியை சேமிக்கிறோம்
+                localStorage.setItem("loggedInTeacher", user);
+                
+                // அடுத்த பக்கத்திற்கு ரீடைரக்ட் செய்கிறோம்
                 window.location.href = "evaluation.html";
             } else {
                 alert("Incorrect username or password!");
