@@ -29,8 +29,11 @@
     </div>
 
     <script>
-       const paper = localStorage.getItem("assignedPaper_" + localStorage.getItem("loggedInTeacher"));
-        document.getElementById("assignedPaperDisplay").innerText = "Assigned Paper: " + (paper || "No Paper Assigned");
+        // Check both possible keys for logged in teacher or assigned teacher
+        const currentTeacher = localStorage.getItem("loggedInTeacher") || localStorage.getItem("assignedTeacher");
+        const paper = localStorage.getItem("assignedPaper_" + currentTeacher) || localStorage.getItem("assignedPaper");
+        
+        document.getElementById("assignedPaperDisplay").innerText = "Assigned Teacher: " + (currentTeacher || "None") + " | Paper: " + (paper || "No Paper Assigned");
 
         const canvas = document.getElementById("paperCanvas");
         const ctx = canvas.getContext("2d");
@@ -41,29 +44,44 @@
         ctx.strokeStyle = "red";
         ctx.lineWidth = 3;
 
+        // Load image onto canvas if paper exists
+        let bgImg = new Image();
+        if (paper) {
+            bgImg.src = paper;
+            bgImg.onload = function() {
+                ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+            };
+        }
+
         function setTool(tool) { currentTool = tool; }
 
         function clearMarks() { 
             ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            if (paper && bgImg.complete) {
+                ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+            }
             xCount = 0;
             slashCount = 0;
             calculateFinalMarks();
         }
 
         canvas.addEventListener("click", (e) => {
-            const x = e.offsetX;
-            const y = e.offsetY;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
             drawMark(x, y);
         });
 
         function drawMark(x, y) {
             ctx.beginPath();
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 3;
             if (currentTool === 'X') {
-                ctx.moveTo(x - 5, y - 5); ctx.lineTo(x + 5, y + 5);
-                ctx.moveTo(x + 5, y - 5); ctx.lineTo(x - 5, y + 5);
+                ctx.moveTo(x - 10, y - 10); ctx.lineTo(x + 10, y + 10);
+                ctx.moveTo(x + 10, y - 10); ctx.lineTo(x - 10, y + 10);
                 xCount++;
             } else if (currentTool === '/') {
-                ctx.moveTo(x + 5, y - 5); ctx.lineTo(x - 5, y + 5);
+                ctx.moveTo(x + 10, y - 10); ctx.lineTo(x - 10, y + 10);
                 slashCount++;
             }
             ctx.stroke();
@@ -79,7 +97,7 @@
 
         function submitEvaluation() {
             const finalMarks = document.getElementById("finalMarksDisplay").innerText;
-            localStorage.setItem("studentMarks", finalMarks);
+            localStorage.setItem("studentMarks_" + currentTeacher, finalMarks);
             alert("Evaluation submitted with marks: " + finalMarks);
             window.location.href = "index.html";
         }
