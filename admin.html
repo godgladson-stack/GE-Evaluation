@@ -26,22 +26,14 @@
     <option value="Paper2">Paper 2</option>
   </select>
   <br><br>
-  <button type="button" onclick="assign()">Assign</button>
+  <button type="button" onclick="submitAssignment()">Assign</button>
 </form>
 
 <script>
-  function assign() {
-    let teacher = document.getElementById("teacher").value;
-    let paper = document.getElementById("paper").value;
-    localStorage.setItem("assignedTeacher", teacher);
-    localStorage.setItem("assignedPaper", paper);
-    alert("Paper assigned!");
-  }
-
 <script>
 function submitAssignment() {
-    const teacher = document.getElementById("selectTeacher").value;
-    const paper = document.getElementById("selectPaper").value;
+    const teacher = document.getElementById("Teacher").value;
+    const paper = document.getElementById("Paper").value;
     
     // குறிப்பிட்ட ஆசிரியருக்கான கீயை உருவாக்குதல்
     localStorage.setItem("assignedTeacher_" + teacher, teacher);
@@ -53,6 +45,7 @@ function submitAssignment() {
 
     alert("Paper assigned successfully to " + teacher);
 }
+</script>
 </script>
 <form id="uploadForm">
  <label>Upload Student Paper:</label>
