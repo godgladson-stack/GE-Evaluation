@@ -79,15 +79,20 @@ function assignTeacher() {
     <div>
         <h3>Review Evaluations</h3>
         <p>View completed evaluations and assign final grades.</p>
-        <script>
-    function submitAssignment() {
-        let teacher = document.getElementById("teacherSelect").value;
-        let paper = document.getElementById("paperSelect").value;
-        
-        localStorage.setItem("assignedTeacher", teacher);
-        localStorage.setItem("assignedPaper", paper);
-        alert("Assignment submitted to the teacher!");
-    }
+        function submitAssignment() {
+    const teacher = document.getElementById("selectTeacher").value;
+    const paper = document.getElementById("selectPaper").value;
+    
+    // குறிப்பிட்ட ஆசிரியருக்கான கீயை உருவாக்குதல்
+    localStorage.setItem("assignedTeacher_" + teacher, teacher);
+    localStorage.setItem("assignedPaper_" + teacher, paper);
+
+    // பொதுவான அசைன்மென்ட் சேமிப்பு
+    localStorage.setItem("assignedTeacher", teacher);
+    localStorage.setItem("assignedPaper", paper);
+
+    alert("Paper assigned successfully to " + teacher);
+}
 </script>
     </div>
 </body>
