@@ -6,38 +6,58 @@
         #paperCanvas {
             border: 1px solid black;
             cursor: crosshair;
+            background-color: white; /* Ensure visible background */
+        }
+        .controls {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <h2>Evaluate Student Paper</h2>
+    <div id="assignedPaperDisplay"></div>
+    <div class="controls">
+        <button onclick="setTool('X')">Mark X</button>
+        <button onclick="setTool('/')">Mark /</button>
+        <button onclick="clearCanvas()">Clear Marks</button>
+    </div>
     <canvas id="paperCanvas" width="800" height="1000"></canvas>
-    <br>
-    <button onclick="clearCanvas()">Clear Marks</button>
 
     <script>
+        // Fetch assigned paper from local storage
+        const paper = localStorage.getItem("assignedPaper") || "No Paper Assigned";
+        document.getElementById("assignedPaperDisplay").innerText = "Assigned Paper: " + paper;
+
         const canvas = document.getElementById("paperCanvas");
         const ctx = canvas.getContext("2d");
-        let drawing = false;
+        let currentTool = 'X';
 
         ctx.strokeStyle = "red";
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
 
-        canvas.addEventListener("mousedown", (e) => {
-            drawing = true;
+        function setTool(tool) {
+            currentTool = tool;
+        }
+
+        canvas.addEventListener("click", (e) => {
+            const x = e.offsetX;
+            const y = e.offsetY;
+            drawMark(x, y);
+        });
+
+        function drawMark(x, y) {
             ctx.beginPath();
-            ctx.moveTo(e.offsetX, e.offsetY);
-        });
-
-        canvas.addEventListener("mousemove", (e) => {
-            if (!drawing) return;
-            ctx.lineTo(e.offsetX, e.offsetY);
+            if (currentTool === 'X') {
+                ctx.moveTo(x - 20, y - 20);
+                ctx.lineTo(x + 20, y + 20);
+                ctx.moveTo(x + 20, y - 20);
+                ctx.lineTo(x - 20, y + 20);
+            } else if (currentTool === '/') {
+                ctx.moveTo(x + 20, y - 20);
+                ctx.lineTo(x - 20, y + 20);
+            }
             ctx.stroke();
-        });
-
-        canvas.addEventListener("mouseup", () => {
-            drawing = false;
-        });
+        }
 
         function clearCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
