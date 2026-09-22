@@ -2,6 +2,10 @@
 <html>
 <head>
     <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        div { margin-bottom: 20px; }
+    </style>
 </head>
 <body>
     <h2>Administrator Portal</h2>
@@ -10,75 +14,78 @@
         <h3>Dashboard Overview</h3>
         <p>Active Teachers: 2 | Pending Papers: 5 </p>
     </div>
+
+    <div>
+        <h3>Upload Student Paper</h3>
+        <form id="uploadForm">
+            <label>Upload Student Paper:</label>
+            <input type="file" id="paperInput" accept="image/*">
+            <button type="button" onclick="uploadPaper()">Upload Paper</button>
+        </form>
+    </div>
+
+    <div>
         <h3>Assign Papers</h3>
-<form id="assignForm">
-  <label>Select Teacher:</label>
-  <select id="teacher">
-    <option value="Teacher1User2601201">User2601201</option>
-    <option value="Teacher2User2601202">User2601202</option>
-  </select>
-  <br><br>
-  <label>Select Paper:</label>
-  <select id="paper">
-    <option value="Paper1">Paper 1</option>
-    <option value="Paper2">Paper 2</option>
-  </select>
-  <br><br>
-  <button type="button" onclick="submitAssignment()">Assign</button>
-</form>
-<script>
-function submitAssignment() {
-    const teacher = document.getElementById("Teacher").value;
-    const paper = document.getElementById("Paper").value;
-    
-    // குறிப்பிட்ட ஆசிரியருக்கான கீயை உருவாக்குதல்
-    localStorage.setItem("assignedTeacher_" + teacher, teacher);
-    localStorage.setItem("assignedPaper_" + teacher, paper);
-
-    // பொதுவான அசைன்மென்ட் சேமிப்பு
-    localStorage.setItem("assignedTeacher", teacher);
-    localStorage.setItem("assignedPaper", paper);
-
-    alert("Paper assigned successfully to " + teacher);
-}
-</script>
-<form id="uploadForm">
- <label>Upload Student Paper:</label>
- <input type="file" id="paperInput" accept="image/*">
- <button type="button" onclick="uploadPaper()">Upload Paper</button>
-</form>
-
-<script>
- function uploadPaper() {
- let fileInput = document.getElementById('paperInput').files[0];
- let reader = new FileReader();
-
- reader.onload = function(e) {
- localStorage.setItem("studentPaperBase64", e.target.result);
- alert("Paper uploaded and saved!");
- };
-
- reader.readAsDataURL(fileInput);
- }
-</script>
+        <form id="assignForm">
+            <label>Select Teacher:</label>
+            <select id="teacher">
+                <option value="User2601201">User2601201</option>
+                <option value="User2601202">User2601202</option>
+            </select>
+            <br><br>
+            <label>Select Paper:</label>
+            <select id="paper">
+                <option value="Paper 1">Paper 1</option>
+                <option value="Paper 2">Paper 2</option>
+            </select>
+            <br><br>
+            <button type="button" onclick="submitAssignment()">Assign</button>
         </form>
     </div>
 
     <div>
         <h3>Review Evaluations</h3>
         <p>View completed evaluations and assign final grades.</p>
-        function submitAssignment() {
-    const teacher = document.getElementById("selectTeacher").value;
-    const paper = document.getElementById("selectPaper").value;
-    // குறிப்பிட்ட ஆசிரியருக்கான கீயை உருவாக்குதல்
-    localStorage.setItem("assignedTeacher_" + teacher, teacher);
-    localStorage.setItem("assignedPaper_" + teacher, paper);
- // பொதுவான அசைன்மென்ட் சேமிப்பு
-    localStorage.setItem("assignedTeacher", teacher);
-    localStorage.setItem("assignedPaper", paper);
-alert("Paper assigned successfully to " + teacher);
-}
-</script>
     </div>
+
+    <script>
+        function uploadPaper() {
+            let fileInput = document.getElementById('paperInput').files[0];
+            if (!fileInput) {
+                alert("Please select a file first!");
+                return;
+            }
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+                localStorage.setItem("uploadedStudentPaper", e.target.result);
+                alert("Paper uploaded and saved successfully!");
+            };
+
+            reader.readAsDataURL(fileInput);
+        }
+
+        function submitAssignment() {
+            const teacher = document.getElementById("teacher").value;
+            const paperType = document.getElementById("paper").value;
+            const uploadedPaperImage = localStorage.getItem("uploadedStudentPaper");
+
+            if (!uploadedPaperImage) {
+                alert("Warning: No uploaded paper image found. Please upload a student paper image first!");
+            }
+
+            // Assigning uploaded image base64 or paper name to specific teacher
+            const paperData = uploadedPaperImage || paperType;
+
+            localStorage.setItem("assignedTeacher_" + teacher, teacher);
+            localStorage.setItem("assignedPaper_" + teacher, paperData);
+
+            // General fallback save
+            localStorage.setItem("assignedTeacher", teacher);
+            localStorage.setItem("assignedPaper", paperData);
+
+            alert("Paper (" + paperType + ") assigned successfully to " + teacher);
+        }
+    </script>
 </body>
 </html>
