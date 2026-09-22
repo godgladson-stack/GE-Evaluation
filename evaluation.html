@@ -1,42 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>Paper Evaluation</title>
+    <title>Evaluate Student Paper</title>
+    <style>
+        #paperCanvas {
+            border: 1px solid black;
+            cursor: crosshair;
+        }
+    </style>
 </head>
 <body>
-<div id="evaluationContent">
- <p>Assigned Teacher: <span id="displayTeacher"></span></p>
- <p>Assigned Paper: <span id="displayPaper"></span></p>
-</div>
+    <h2>Evaluate Student Paper</h2>
+    <canvas id="paperCanvas" width="800" height="1000"></canvas>
+    <br>
+    <button onclick="clearCanvas()">Clear Marks</button>
 
-<script>
- document.getElementById("displayTeacher").textContent = localStorage.getItem("assignedTeacher");
- document.getElementById("displayPaper").textContent = localStorage.getItem("assignedPaper");
-</script>
+    <script>
+        const canvas = document.getElementById("paperCanvas");
+        const ctx = canvas.getContext("2d");
+        let drawing = false;
 
-<h2>Evaluate Student Paper</h2>
-<div style="border:1px solid #ccc; padding:20px; width:500px;">
- <h3>Student Paper Content</h3>
- <img id="studentPaperImage" src="paper_image.jpg" alt="Student Paper" style="width:100%;">
-</div>
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 2;
 
-<script>
- let savedPaper = localStorage.getItem("studentPaperBase64");
- if (savedPaper) {
-  document.getElementById("studentPaperImage").src = savedPaper;
- }
-</script>
+        canvas.addEventListener("mousedown", (e) => {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        });
 
-<label>Marks:</label>
-<input type="number" id="marks">
-<button type="button" onclick="submitMarks()">Submit Evaluation</button>
+        canvas.addEventListener("mousemove", (e) => {
+            if (!drawing) return;
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        });
 
-<script>
- function submitMarks() {
-  let marks = document.getElementById("marks").value;
-  localStorage.setItem("studentMarks", marks);
-  alert("Marks submitted!");
- }
-</script>
+        canvas.addEventListener("mouseup", () => {
+            drawing = false;
+        });
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
 </body>
 </html>
