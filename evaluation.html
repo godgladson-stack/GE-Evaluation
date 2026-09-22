@@ -29,7 +29,7 @@
     </div>
 
     <script>
-        const paper = localStorage.getItem("assignedPaper");
+       const paper = localStorage.getItem("assignedPaper_" + localStorage.getItem("loggedInTeacher"));
         document.getElementById("assignedPaperDisplay").innerText = "Assigned Paper: " + (paper || "No Paper Assigned");
 
         const canvas = document.getElementById("paperCanvas");
