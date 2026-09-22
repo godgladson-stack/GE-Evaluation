@@ -1,18 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Teacher Login</title>
+    <title>Teacher 1 Login</title>
 </head>
 <body>
-<h2>Teacher Portal</h2>
-<form action="evaluation.html">
-<label>Username:</label>
-<input type="text">
+    <h2>Teacher Portal</h2>
+    <!-- Form removed to handle submission via JS -->
+    <label>Username:</label>
+    <br>
+    <input type="text" id="username">
+    <br>
+    <label>Password:</label>
+    <br>
+    <input type="password" id="password">
+    <br>
+    <br>
+    <button type="button" onclick="checkLogin()">Login</button>
 
-<label>Password:</label>
-<input type="password">
+    <script>
+        function checkLogin() {
+            let user = document.getElementById("username").value;
+            let pass = document.getElementById("password").value;
 
-<button>Login</button>
-</form>
+            // குறிப்பிட்ட யூசர்நேம் மற்றும் பாஸ்வேர்டை இங்கே மாற்றலாம்
+            if (user === "teacher1" && pass === "pass123") {
+                window.location.href = "evaluation.html";
+            } else {
+                alert("Incorrect username or password!");
+            }
+        }
+    </script>
 </body>
 </html>
