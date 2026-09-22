@@ -39,19 +39,19 @@
   }
 
 <script>
-function assignTeacher() {
-    var teacher = document.getElementById("teacher").value;
-    var paper = document.getElementById("paper").value;
+function submitAssignment() {
+    const teacher = document.getElementById("selectTeacher").value;
+    const paper = document.getElementById("selectPaper").value;
     
-    if (paper === "") {
-        alert("Please select a paper first!");
-        return;
-    }
-    
+    // குறிப்பிட்ட ஆசிரியருக்கான கீயை உருவாக்குதல்
+    localStorage.setItem("assignedTeacher_" + teacher, teacher);
+    localStorage.setItem("assignedPaper_" + teacher, paper);
+
+    // பொதுவான அசைன்மென்ட் சேமிப்பு
     localStorage.setItem("assignedTeacher", teacher);
     localStorage.setItem("assignedPaper", paper);
-    alert("Paper assigned!");
-}
+
+    alert("Paper assigned successfully to " + teacher);
 }
 </script>
 <form id="uploadForm">
