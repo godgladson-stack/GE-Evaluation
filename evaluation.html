@@ -59,11 +59,11 @@
         function drawMark(x, y) {
             ctx.beginPath();
             if (currentTool === 'X') {
-                ctx.moveTo(x - 10, y - 10); ctx.lineTo(x + 10, y + 10);
-                ctx.moveTo(x + 10, y - 10); ctx.lineTo(x - 10, y + 10);
+                ctx.moveTo(x - 5, y - 5); ctx.lineTo(x + 5, y + 5);
+                ctx.moveTo(x + 5, y - 5); ctx.lineTo(x - 5, y + 5);
                 xCount++;
             } else if (currentTool === '/') {
-                ctx.moveTo(x + 10, y - 10); ctx.lineTo(x - 10, y + 10);
+                ctx.moveTo(x + 5, y - 5); ctx.lineTo(x - 5, y + 5);
                 slashCount++;
             }
             ctx.stroke();
