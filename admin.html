@@ -10,8 +10,6 @@
         <h3>Dashboard Overview</h3>
         <p>Active Teachers: 0 | Pending Papers: 1 </p>
     </div>
-
-    <div>
         <h3>Assign Papers</h3>
 <form id="assignForm">
   <label>Select Teacher:</label>
@@ -28,8 +26,6 @@
   <br><br>
   <button type="button" onclick="submitAssignment()">Assign</button>
 </form>
-
-<script>
 <script>
 function submitAssignment() {
     const teacher = document.getElementById("Teacher").value;
@@ -45,7 +41,6 @@ function submitAssignment() {
 
     alert("Paper assigned successfully to " + teacher);
 }
-</script>
 </script>
 <form id="uploadForm">
  <label>Upload Student Paper:</label>
