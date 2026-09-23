@@ -18,33 +18,43 @@
     </div>
 
     <div>
+        <details>
+    <summary>Manage Papers</summary>
+    <div>
         <h3>Upload Student Paper</h3>
-        <form id="uploadForm">
-            <label>Upload Student Paper:</label>
+        <form id="uploadform">
+            <label>Upload Student Paper</label>
+            <br>
             <input type="file" id="paperInput" accept="image/*">
+            <br>
+            <br>
             <button type="button" onclick="uploadPaper()">Upload Paper</button>
         </form>
     </div>
-
     <div>
         <h3>Assign Papers</h3>
-        <form id="assignForm">
+        <form id="assignform">
             <label>Select Examiner:</label>
+            <br>
             <select id="examiner">
                 <option value="User2601201">User2601201</option>
                 <option value="User2601202">User2601202</option>
             </select>
-            <br><br>
+            <br>
+            <br>
             <label>Select Paper:</label>
+            <br>
             <select id="paper">
                 <option value="Paper 1">Paper 1</option>
                 <option value="Paper 2">Paper 2</option>
             </select>
-            <br><br>
+            <br>
+            <br>
             <button type="button" onclick="submitAssignment()">Assign</button>
         </form>
     </div>
-
+</details>
+        
     <div></center>
         <h3>Review Evaluations</h3>
         <p>View completed evaluations and assign final grades.</p>
