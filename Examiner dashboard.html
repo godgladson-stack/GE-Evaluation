@@ -4,33 +4,52 @@
     <title>Examiner Dashboard</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
+        .dashboard-container { display: flex; align-items: flex-start; gap: 20px; }
         .details-box { border: 1px solid #ccc; padding: 15px; width: 300px; border-radius: 5px; }
         .edit-box { display: none; margin-top: 15px; border: 1px dashed #aaa; padding: 15px; width: 300px; }
         button { padding: 10px 15px; font-size: 16px; cursor: pointer; margin-top: 15px; }
-        img { width: 100px; height: 100px; border-radius: 50%; }
+        .photo-box { width: 100px; height: 100px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #f9f9f9; }
+        img { max-width: 100%; max-height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
 
     <h2>Examiner Dashboard</h2>
 
-    <div class="details-box">
-        <h3>Examiner Profile Details</h3>
-        <p><img id="examinerPhoto" src="placeholder.jpg" alt="Examiner Photo"></p>
-        <p><strong>Name:</strong> <span id="examinerName"></span></p>
-        <p><strong>Examiner ID:</strong> <span id="examinerIdDisplay"></span></p>
-        <p><strong>OSTE Number:</strong> <span id="examinerOSTE"></span></p>
-        <p><strong>Institution Name:</strong> <span id="examinerInstName"></span></p>
-        <p><strong>Institution Code:</strong> <span id="examinerInstCode"></span></p>
-        <p><strong>Gmail ID:</strong> <span id="examinerEmail"></span></p>
-        <p><strong>Assigned Details:</strong> <span id="examinerDetailsDisplay"></span></p>
-        <button onclick="showEditForm()">Edit Profile</button>
+    <div class="dashboard-container">
+        <div class="details-box">
+            <h3>Examiner Profile Details</h3>
+            <p><strong>Name:</strong> <span id="displayName">N/A</span></p>
+            <p><strong>Examiner ID:</strong> <span id="displayExaminerID">N/A</span></p>
+            <p><strong>OSTE Number:</strong> <span id="displayOSTE">N/A</span></p>
+            <p><strong>Institution Name:</strong> <span id="displayInstName">N/A</span></p>
+            <p><strong>Institution Code:</strong> <span id="displayInstCode">N/A</span></p>
+            <p><strong>Gmail ID:</strong> <span id="displayEmail">N/A</span></p>
+            <p><strong>Assigned Details:</strong> <span id="displayDetails">No details assigned</span></p>
+            <button onclick="showEditForm()">Edit Profile</button>
+        </div>
+
+        <div class="photo-box">
+            <img id="displayPhoto" src="" alt="Examiner Photo">
+        </div>
     </div>
 
     <div id="editForm" class="edit-box">
         <h3>Edit Profile Details</h3>
-        <label>New Details:</label><br>
-        <input type="text" id="newDetailsInput"><br>
+        <label>Photo URL:</label><br>
+        <input type="text" id="editPhoto"><br><br>
+        <label>Name:</label><br>
+        <input type="text" id="editName"><br><br>
+        <label>OSTE Number:</label><br>
+        <input type="text" id="editOSTE"><br><br>
+        <label>Institution Name:</label><br>
+        <input type="text" id="editInstName"><br><br>
+        <label>Institution Code:</label><br>
+        <input type="text" id="editInstCode"><br><br>
+        <label>Gmail ID:</label><br>
+        <input type="text" id="editEmail"><br><br>
+        <label>Assigned Details:</label><br>
+        <input type="text" id="editDetails"><br><br>
         <button onclick="saveProfile()">Save Profile</button>
         <button onclick="hideEditForm()">Cancel</button>
     </div>
@@ -39,23 +58,45 @@
 
     <script>
         const examinerID = localStorage.getItem("loggedInExaminer");
-        
+
         function loadProfile() {
-            const examinerDetails = localStorage.getItem("assignedExaminer_" + examinerID);
-            document.getElementById("examinerIdDisplay").innerText = examinerID;
-            document.getElementById("examinerDetailsDisplay").innerText = examinerDetails || "No details assigned";
+            document.getElementById("displayExaminerID").innerText = examinerID;
+
+            const name = localStorage.getItem("name_" + examinerID);
+            const oste = localStorage.getItem("oste_" + examinerID);
+            const instName = localStorage.getItem("instName_" + examinerID);
+            const instCode = localStorage.getItem("instCode_" + examinerID);
+            const email = localStorage.getItem("email_" + examinerID);
+            const details = localStorage.getItem("details_" + examinerID);
+            const photo = localStorage.getItem("photo_" + examinerID);
+
+            if (name) document.getElementById("displayName").innerText = name;
+            if (oste) document.getElementById("displayOSTE").innerText = oste;
+            if (instName) document.getElementById("displayInstName").innerText = instName;
+            if (instCode) document.getElementById("displayInstCode").innerText = instCode;
+            if (email) document.getElementById("displayEmail").innerText = email;
+            if (details) document.getElementById("displayDetails").innerText = details;
             
-            // Placeholder values. In a real app, fetch these from localStorage or server.
-            document.getElementById("examinerName").innerText = "John Doe";
-            document.getElementById("examinerOSTE").innerText = "OSTE12345";
-            document.getElementById("examinerInstName").innerText = "Gladson Education";
-            document.getElementById("examinerInstCode").innerText = "INST987";
-            document.getElementById("examinerEmail").innerText = "johndoe@example.com";
+            const photoImg = document.getElementById("displayPhoto");
+            if (photo) {
+                photoImg.src = photo;
+                photoImg.style.display = 'block';
+            } else {
+                photoImg.style.display = 'none';
+            }
         }
 
         loadProfile();
 
         function showEditForm() {
+            document.getElementById("editName").value = document.getElementById("displayName").innerText !== "N/A" ? document.getElementById("displayName").innerText : "";
+            document.getElementById("editOSTE").value = document.getElementById("displayOSTE").innerText !== "N/A" ? document.getElementById("displayOSTE").innerText : "";
+            document.getElementById("editInstName").value = document.getElementById("displayInstName").innerText !== "N/A" ? document.getElementById("displayInstName").innerText : "";
+            document.getElementById("editInstCode").value = document.getElementById("displayInstCode").innerText !== "N/A" ? document.getElementById("displayInstCode").innerText : "";
+            document.getElementById("editEmail").value = document.getElementById("displayEmail").innerText !== "N/A" ? document.getElementById("displayEmail").innerText : "";
+            document.getElementById("editDetails").value = document.getElementById("displayDetails").innerText !== "No details assigned" ? document.getElementById("displayDetails").innerText : "";
+            document.getElementById("editPhoto").value = localStorage.getItem("photo_" + examinerID) || "";
+
             document.getElementById("editForm").style.display = 'block';
         }
 
@@ -64,14 +105,16 @@
         }
 
         function saveProfile() {
-            const newDetails = document.getElementById("newDetailsInput").value;
-            if (newDetails) {
-                localStorage.setItem("assignedExaminer_" + examinerID, newDetails);
-                loadProfile();
-                hideEditForm();
-            } else {
-                alert("Please enter new details.");
-            }
+            localStorage.setItem("name_" + examinerID, document.getElementById("editName").value);
+            localStorage.setItem("oste_" + examinerID, document.getElementById("editOSTE").value);
+            localStorage.setItem("instName_" + examinerID, document.getElementById("editInstName").value);
+            localStorage.setItem("instCode_" + examinerID, document.getElementById("editInstCode").value);
+            localStorage.setItem("email_" + examinerID, document.getElementById("editEmail").value);
+            localStorage.setItem("details_" + examinerID, document.getElementById("editDetails").value);
+            localStorage.setItem("photo_" + examinerID, document.getElementById("editPhoto").value);
+
+            loadProfile();
+            hideEditForm();
         }
 
         function goToNext() {
