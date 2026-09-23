@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>EXAMINER Dashboard</title>
+    <title>Examiner Dashboard</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         .details-box { border: 1px solid #ccc; padding: 15px; width: 300px; border-radius: 5px; }
@@ -13,22 +13,24 @@
     <h2>Examiner Dashboard</h2>
 
     <div class="details-box">
-        <h3>Examiner Porifal Details</h3>
-        <p><strong>Teacher ID:</strong> <span id="teacherIdDisplay"></span></p>
-        <p><strong>Assigned Details:</strong> <span id="teacherDetailsDisplay"></span></p>
+        <h3>Examiner Profile Details</h3>
+        <p><strong>Examiner ID:</strong> <span id="examinerIdDisplay"></span></p>
+        <p><strong>Assigned Details:</strong> <span id="examinerDetailsDisplay"></span></p>
     </div>
 
     <button onclick="goToNext()">Next</button>
 
     <script>
-        const teacherID = localStorage.getItem("loggedInTeacher");
-        const teacherDetails = localStorage.getItem("assignedTeacher_" + teacherID);
+        // Login page-la save panna 'loggedInExaminer' ID-a edukkurom
+        const examinerID = localStorage.getItem("loggedInExaminer");
+        const examinerDetails = localStorage.getItem("assignedExaminer_" + examinerID);
 
-        document.getElementById("teacherIdDisplay").innerText = teacherID;
-        document.getElementById("teacherDetailsDisplay").innerText = teacherDetails || "No details assigned";
+        document.getElementById("examinerIdDisplay").innerText = examinerID;
+        document.getElementById("examinerDetailsDisplay").innerText = examinerDetails || "No details assigned";
 
         function goToNext() {
-            window.location.href = "student_details.html";
+            // 3rd page - Assigned paper details page-ku poga
+            window.location.href = "assigned_papers.html";
         }
     </script>
 
