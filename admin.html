@@ -12,7 +12,7 @@
 
     <div>
         <h3>Dashboard Overview</h3>
-        <p>Active Teachers: 2 | Pending Papers: 5 </p>
+        <p>Active Examiners: 2 | Pending Papers: 5 </p>
     </div>
 
     <div>
@@ -66,7 +66,7 @@
         }
 
         function submitAssignment() {
-            const teacher = document.getElementById("teacher").value;
+            const Examiner = document.getElementById("Examiner").value;
             const paperType = document.getElementById("paper").value;
             const uploadedPaperImage = localStorage.getItem("uploadedStudentPaper");
 
@@ -77,14 +77,14 @@
             // Assigning uploaded image base64 or paper name to specific teacher
             const paperData = uploadedPaperImage || paperType;
 
-            localStorage.setItem("assignedTeacher_" + teacher, teacher);
-            localStorage.setItem("assignedPaper_" + teacher, paperData);
+            localStorage.setItem("assignedExaminer_" + examiner, examiner);
+            localStorage.setItem("assignedPaper_" + examiner, paperData);
 
             // General fallback save
-            localStorage.setItem("assignedTeacher", teacher);
+            localStorage.setItem("assignedExaminer", examiner);
             localStorage.setItem("assignedPaper", paperData);
 
-            alert("Paper (" + paperType + ") assigned successfully to " + teacher);
+            alert("Paper (" + paperType + ") assigned successfully to " + examiner);
         }
     </script>
 </body>
