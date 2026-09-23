@@ -15,22 +15,20 @@
     <div class="details-box">
         <h3>Examiner Profile Details</h3>
         <p><strong>Examiner ID:</strong> <span id="examinerIdDisplay"></span></p>
-        <p><strong>Assigned Details:</strong> <span id="examinerDetailsDisplay"></span></p>
+        <p><strong>Assigned Details:</strong> <span id="teacherDetailsDisplay"></span></p>
     </div>
 
     <button onclick="goToNext()">Next</button>
 
     <script>
-        // Login page-la save panna 'loggedInExaminer' ID-a edukkurom
         const examinerID = localStorage.getItem("loggedInExaminer");
         const examinerDetails = localStorage.getItem("assignedExaminer_" + examinerID);
 
         document.getElementById("examinerIdDisplay").innerText = examinerID;
-        document.getElementById("examinerDetailsDisplay").innerText = examinerDetails || "No details assigned";
+        document.getElementById("teacherDetailsDisplay").innerText = examinerDetails || "No details assigned";
 
         function goToNext() {
-            // 3rd page - Assigned paper details page-ku poga
-            window.location.href = "assigned_papers.html";
+            window.location.href = "evaluation.html";
         }
     </script>
 
