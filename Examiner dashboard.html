@@ -5,6 +5,7 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         .details-box { border: 1px solid #ccc; padding: 15px; width: 300px; border-radius: 5px; }
+        .edit-box { display: none; margin-top: 15px; border: 1px dashed #aaa; padding: 15px; width: 300px; }
         button { padding: 10px 15px; font-size: 16px; cursor: pointer; margin-top: 15px; }
     </style>
 </head>
@@ -15,20 +16,52 @@
     <div class="details-box">
         <h3>Examiner Profile Details</h3>
         <p><strong>Examiner ID:</strong> <span id="examinerIdDisplay"></span></p>
-        <p><strong>Assigned Details:</strong> <span id="teacherDetailsDisplay"></span></p>
+        <p><strong>Assigned Details:</strong> <span id="examinerDetailsDisplay"></span></p>
+        <button onclick="showEditForm()">Edit Profile</button>
+    </div>
+
+    <div id="editForm" class="edit-box">
+        <h3>Edit Profile Details</h3>
+        <label>New Details:</label><br>
+        <input type="text" id="newDetailsInput"><br>
+        <button onclick="saveProfile()">Save Profile</button>
+        <button onclick="hideEditForm()">Cancel</button>
     </div>
 
     <button onclick="goToNext()">Next</button>
 
     <script>
         const examinerID = localStorage.getItem("loggedInExaminer");
-        const examinerDetails = localStorage.getItem("assignedExaminer_" + examinerID);
+        
+        function loadProfile() {
+            const examinerDetails = localStorage.getItem("assignedExaminer_" + examinerID);
+            document.getElementById("examinerIdDisplay").innerText = examinerID;
+            document.getElementById("examinerDetailsDisplay").innerText = examinerDetails || "No details assigned";
+        }
 
-        document.getElementById("examinerIdDisplay").innerText = examinerID;
-        document.getElementById("teacherDetailsDisplay").innerText = examinerDetails || "No details assigned";
+        loadProfile();
+
+        function showEditForm() {
+            document.getElementById("editForm").style.display = 'block';
+        }
+
+        function hideEditForm() {
+            document.getElementById("editForm").style.display = 'none';
+        }
+
+        function saveProfile() {
+            const newDetails = document.getElementById("newDetailsInput").value;
+            if (newDetails) {
+                localStorage.setItem("assignedExaminer_" + examinerID, newDetails);
+                loadProfile();
+                hideEditForm();
+            } else {
+                alert("Please enter new details.");
+            }
+        }
 
         function goToNext() {
-            window.location.href = "evaluation.html";
+            window.location.href = "assigned_papers.html";
         }
     </script>
 
