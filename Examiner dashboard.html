@@ -7,6 +7,7 @@
         .details-box { border: 1px solid #ccc; padding: 15px; width: 300px; border-radius: 5px; }
         .edit-box { display: none; margin-top: 15px; border: 1px dashed #aaa; padding: 15px; width: 300px; }
         button { padding: 10px 15px; font-size: 16px; cursor: pointer; margin-top: 15px; }
+        img { width: 100px; height: 100px; border-radius: 50%; }
     </style>
 </head>
 <body>
@@ -15,7 +16,13 @@
 
     <div class="details-box">
         <h3>Examiner Profile Details</h3>
+        <p><img id="examinerPhoto" src="placeholder.jpg" alt="Examiner Photo"></p>
+        <p><strong>Name:</strong> <span id="examinerName"></span></p>
         <p><strong>Examiner ID:</strong> <span id="examinerIdDisplay"></span></p>
+        <p><strong>OSTE Number:</strong> <span id="examinerOSTE"></span></p>
+        <p><strong>Institution Name:</strong> <span id="examinerInstName"></span></p>
+        <p><strong>Institution Code:</strong> <span id="examinerInstCode"></span></p>
+        <p><strong>Gmail ID:</strong> <span id="examinerEmail"></span></p>
         <p><strong>Assigned Details:</strong> <span id="examinerDetailsDisplay"></span></p>
         <button onclick="showEditForm()">Edit Profile</button>
     </div>
@@ -37,6 +44,13 @@
             const examinerDetails = localStorage.getItem("assignedExaminer_" + examinerID);
             document.getElementById("examinerIdDisplay").innerText = examinerID;
             document.getElementById("examinerDetailsDisplay").innerText = examinerDetails || "No details assigned";
+            
+            // Placeholder values. In a real app, fetch these from localStorage or server.
+            document.getElementById("examinerName").innerText = "John Doe";
+            document.getElementById("examinerOSTE").innerText = "OSTE12345";
+            document.getElementById("examinerInstName").innerText = "Gladson Education";
+            document.getElementById("examinerInstCode").innerText = "INST987";
+            document.getElementById("examinerEmail").innerText = "johndoe@example.com";
         }
 
         loadProfile();
