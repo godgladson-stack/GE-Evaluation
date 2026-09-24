@@ -1,39 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>EXAMINER 1 Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXAMINER 1 Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f7f9fc;
+      margin: 0;
+    }
+    .login-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      width: 400px;
+      text-align: center;
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    h3 {
+      color: #555;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+    h4 {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-<center> <h2>EXAMINER LOGIN</h2>
+  <div class="login-container">
+    <h2>EXAMINER LOGIN</h2>
     <h3>DIRECTORATE OF TECHNICAL EDUCATION EXAMINIATION TAMIL NADU-2026</h3>
-    <h4>OSDE EVALUTAION PORTAL</h4>
-    <label>Username:</label>
-    <br>
-    <input type="text" id="username">
-    <br>
-    <label>Password:</label>
-    <br>
-    <input type="password" id="password">
-    <br>
-    <br>
-    <button type="button" onclick="checkLogin()">Login</button></center>
-
-    <script>
-        function checkLogin() {
-            let user = document.getElementById("username").value;
-            let pass = document.getElementById("password").value;
-
-            // குறிப்பிட்ட யூசர்நேம் மற்றும் பாஸ்வேர்டை இங்கே சரிபார்க்கிறோம்
-            if (user === "User2601201" && pass === "2601201") {
-                // லாகின் செய்த எக்ஸாமினர் ஐடியை சேமிக்கிறோம்
-                localStorage.setItem("loggedInExaminer", user);
-                
-                // எக்ஸாமினர் டேஷ்போர்டு பக்கத்திற்கு ரீடைரக்ட் செய்கிறோம்
-                window.location.href = "Examiner dashboard.html";
-            } else {
-                alert("Incorrect username or password!");
-            }
-        }
-    </script>
+    <h4>OSDE EVALUATAION PORTAL</h4>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username">
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+    </div>
+    <button onclick="checkLogin()">Login</button>
+  </div>
 </body>
 </html>
