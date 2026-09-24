@@ -95,6 +95,28 @@
       background-color: white;
       border-top: 1px solid #ccc;
     }
+    .assignment-item {
+      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
   </style>
 </head>
 <body>
@@ -115,8 +137,8 @@
         <div class="form-group">
           <h3>Upload Student Paper</h3>
           <label>Choose Student Paper</label>
-          <input type="file">
-          <button style="margin-top: 10px;">Upload Paper</button>
+          <input type="file" id="paperInput">
+          <button style="margin-top: 10px;" onclick="uploadPaper()">Upload Paper</button>
         </div>
         
         <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ccc;">
@@ -124,23 +146,28 @@
         <div class="form-group">
           <h3>Assign Papers</h3>
           <label>Select Examiner</label>
-          <select>
+          <select id="examinerSelect">
             <option>User2601201</option>
+            <option>User2601202</option>
           </select>
           <label style="margin-top: 10px;">Select Paper</label>
-          <select>
+          <select id="paperSelect">
             <option>Paper 1</option>
+             <option>Paper 2</option>
           </select>
-          <button style="margin-top: 10px;">Assign</button>
+          <button style="margin-top: 10px;" onclick="assignPaper()">Assign</button>
         </div>
       </div>
+    </section>
+
+    <section class="card">
+      <h3>Assigned Papers List</h3>
+      <div id="assignedList"></div>
     </section>
   </div>
 
   <script>
     var col = document.getElementsByClassName("collapsible");
-    var i;
-
     for (i = 0; i < col.length; i++) {
       col[i].addEventListener("click", function() {
         this.classList.toggle("active");
@@ -151,6 +178,36 @@
           content.style.display = "block";
         }
       });
+    }
+
+    function uploadPaper() {
+      var fileInput = document.getElementById('paperInput');
+      if (fileInput.files.length > 0) {
+        alert("Paper uploaded successfully!");
+      } else {
+        alert("Please choose a file first.");
+      }
+    }
+
+    function assignPaper() {
+      var examiner = document.getElementById('examinerSelect').value;
+      var paper = document.getElementById('paperSelect').value;
+      var assignedList = document.getElementById('assignedList');
+
+      var assignmentItem = document.createElement('div');
+      assignmentItem.className = 'assignment-item';
+      assignmentItem.innerHTML = `
+        <span><strong>Examiner:</strong> ${examiner} | <strong>Paper:</strong> ${paper}</span>
+        <button class="delete-btn" onclick="deleteAssignment(this)">Delete</button>
+      `;
+
+      assignedList.appendChild(assignmentItem);
+      alert("Paper assigned successfully!");
+    }
+
+    function deleteAssignment(button) {
+      var item = button.parentElement;
+      item.remove();
     }
   </script>
 </body>
