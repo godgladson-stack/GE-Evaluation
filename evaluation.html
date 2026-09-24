@@ -97,11 +97,14 @@
         }
 
        function submitEvaluation() {
+  const canvas = document.getElementById("paperCanvas");
+  const canvasImage = canvas.toDataURL("image/png");
   const finalMarks = document.getElementById("finalMarksDisplay").innerText;
   const evaluationId = 'eval_' + new Date().getTime();
+
   localStorage.setItem("studentMarks_" + evaluationId, JSON.stringify({
     teacher: currentTeacher,
-    paper: paper,
+    paper: canvasImage,
     marks: finalMarks
   }));
   alert("Evaluation submitted with marks: " + finalMarks);
