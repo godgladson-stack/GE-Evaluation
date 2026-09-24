@@ -1,115 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Dashboard</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        div { margin-bottom: 20px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f9fc;
+      margin: 0;
+      padding: 0;
+    }
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    h3 {
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+      color: #333;
+      margin-top: 0;
+    }
+    .card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+    input[type="file"], select, button {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-top: 5px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 12px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .collapsible {
+      background-color: #f7f9fc;
+      cursor: pointer;
+      padding: 15px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .collapsible:after {
+      content: '\25BC';
+      font-size: 14px;
+    }
+    .active:after {
+      content: '\25B2';
+    }
+    .content {
+      padding: 15px;
+      display: none;
+      background-color: white;
+      border-top: 1px solid #ccc;
+    }
+  </style>
 </head>
 <body>
-    <center><h2>DIRECTORATE OF TECHNICAL EDUCATION TAMIL NADU</h2>
+  <div class="dashboard-container">
+    <header>
+      <h1>Directorate of Technical Education, Tamil Nadu</h1>
+      <p>Directorate of Technical Examinations - 2026</p>
+    </header>
 
-    <div>
-         <h3>DIRECTORATE OF TECHNICAL EXAMINATIOIN-2026</h3>
-        <h4>Dashboard Overview</h4>
-        <p>Active Examiners: 2 | Pending Papers: 5 </p>
-    </div>
+    <section class="card">
+      <h3>Dashboard Overview</h3>
+      <p>Active Examiners: <strong>2</strong> | Pending Papers: <strong>5</strong></p>
+    </section>
 
-    <div>
-        <details>
-    <summary>Manage Papers</summary>
-    <div>
-        <h3>Upload Student Paper</h3>
-        <form id="uploadform">
-            <label>Upload Student Paper</label>
-            <br>
-            <input type="file" id="paperInput" accept="image/*">
-            <br>
-            <br>
-            <button type="button" onclick="uploadPaper()">Upload Paper</button>
-        </form>
-    </div>
-    <div>
-        <h3>Assign Papers</h3>
-        <form id="assignform">
-            <label>Select Examiner:</label>
-            <br>
-            <select id="examiner">
-                <option value="User2601201">User2601201</option>
-                <option value="User2601202">User2601202</option>
-            </select>
-            <br>
-            <br>
-            <label>Select Paper:</label>
-            <br>
-            <select id="paper">
-                <option value="Paper 1">Paper 1</option>
-                <option value="Paper 2">Paper 2</option>
-            </select>
-            <br>
-            <br>
-            <button type="button" onclick="submitAssignment()">Assign</button>
-        </form>
-    </div>
-</details>
+    <section class="card">
+      <button class="collapsible">Manage Papers</button>
+      <div class="content">
+        <div class="form-group">
+          <h3>Upload Student Paper</h3>
+          <label>Choose Student Paper</label>
+          <input type="file">
+          <button style="margin-top: 10px;">Upload Paper</button>
+        </div>
         
-    <div></center>
-        <h3>Review Evaluations</h3>
-        <p>View completed evaluations and assign final grades.</p>
-    </div>
-function submitEvaluation() {
-  const canvas = document.getElementById("paperCanvas");
-  const canvasImage = canvas.toDataURL("image/png");
-  const finalMarks = document.getElementById("finalMarksDisplay").innerText;
-  const evaluationId = 'eval_' + new Date().getTime();
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ccc;">
 
-  localStorage.setItem("studentMarks_" + evaluationId, JSON.stringify({
-    teacher: currentTeacher,
-    paper: canvasImage,
-    marks: finalMarks
-  }));
-  alert("Evaluation submitted with marks: " + finalMarks);
-  window.location.href = "admin.html";
-}
-</script>
-        function uploadPaper() {
-            let fileInput = document.getElementById('paperInput').files[0];
-            if (!fileInput) {
-                alert("Please select a file first!");
-                return;
-            }
-            let reader = new FileReader();
+        <div class="form-group">
+          <h3>Assign Papers</h3>
+          <label>Select Examiner</label>
+          <select>
+            <option>User2601201</option>
+          </select>
+          <label style="margin-top: 10px;">Select Paper</label>
+          <select>
+            <option>Paper 1</option>
+          </select>
+          <button style="margin-top: 10px;">Assign</button>
+        </div>
+      </div>
+    </section>
+  </div>
 
-            reader.onload = function(e) {
-                localStorage.setItem("uploadedStudentPaper", e.target.result);
-                alert("Paper uploaded and saved successfully!");
-            };
+  <script>
+    var col = document.getElementsByClassName("collapsible");
+    var i;
 
-            reader.readAsDataURL(fileInput);
+    for (i = 0; i < col.length; i++) {
+      col[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
         }
-
-        function submitAssignment() {
-            const Examiner = document.getElementById("Examiner").value;
-            const paperType = document.getElementById("paper").value;
-            const uploadedPaperImage = localStorage.getItem("uploadedStudentPaper");
-
-            if (!uploadedPaperImage) {
-                alert("Warning: No uploaded paper image found. Please upload a student paper image first!");
-            }
-
-            // Assigning uploaded image base64 or paper name to specific teacher
-            const paperData = uploadedPaperImage || paperType;
-
-            localStorage.setItem("assignedExaminer_" + examiner, examiner);
-            localStorage.setItem("assignedPaper_" + examiner, paperData);
-
-            // General fallback save
-            localStorage.setItem("assignedExaminer", examiner);
-            localStorage.setItem("assignedPaper", paperData);
-
-            alert("Paper (" + paperType + ") assigned successfully to " + examiner);
-        }
-    </script>
+      });
+    }
+  </script>
 </body>
 </html>
