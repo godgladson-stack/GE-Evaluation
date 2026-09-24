@@ -77,12 +77,18 @@
       <label for="username">Username:</label>
       <input type="text" id="User2601201" name="username">
     </div>
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" id="2601201" name="password">
-    </div>
-<button onclick="goToNext()">Login</button>
-<script>
+ <script>
+  function checkLogin() {
+    var user = document.getElementById("User2601201").value;
+    var pass = document.getElementById("2601201").value;
+
+    if (user === "User2601201" && pass === "2601201") {
+      window.location.href = "Examiner dashboard.html";
+    } else {
+      alert("தவறான பயனர்பெயர் அல்லது கடவுச்சொல்.");
+    }
+  }
+</script>
   function goToNext() {
     window.location.href = "Examiner dashboard.html";
   }
