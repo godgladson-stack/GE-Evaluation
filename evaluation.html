@@ -1,36 +1,191 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluate Student Paper</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        #paperCanvas { border: 1px solid black; cursor: crosshair; background-color: white; display: block; margin-bottom: 20px; }
-        .controls, .grading { margin-bottom: 15px; align: right; }
-        button { padding: 10px 15px; margin-right: 10px; font-size: 16px; cursor: pointer; }
-        input[type="number"] { padding: 8px; font-size: 16px; width: 80px; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #1a252f;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        #assignedPaperDisplay {
+            background-color: #eef2f5;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: #4a5568;
+            font-weight: 500;
+            margin-bottom: 25px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        button {
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #2b6cb0;
+            transform: translateY(-1px);
+        }
+
+        .controls button:nth-child(1) { background-color: #e53e3e; }
+        .controls button:nth-child(1):hover { background-color: #c53030; }
+
+        .controls button:nth-child(2) { background-color: #38a169; }
+        .controls button:nth-child(2):hover { background-color: #2f855a; }
+
+        .controls button:nth-child(3) { background-color: #718096; }
+        .controls button:nth-child(3):hover { background-color: #4a5568; }
+
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        #paperCanvas {
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            cursor: crosshair;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .grading {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .grading-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        input[type="number"] {
+            padding: 10px 12px;
+            font-size: 15px;
+            width: 130px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #3182ce;
+        }
+
+        #finalMarksDisplay {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2b6cb0;
+            background: #ebf8ff;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid #bee3f8;
+        }
+
+        .submit-btn {
+            background-color: #2b6cb0;
+            padding: 12px 24px;
+            font-size: 15px;
+        }
+
+        .submit-btn:hover {
+            background-color: #2c5282;
+        }
     </style>
 </head>
 <body>
-    <h2>Evaluate Student Paper</h2>
-    <center>  <div id="assignedPaperDisplay"></div> </center>
-   <img src=<img src="[https://github.com/godgladson-stack/GE-Evaluation/blob/main/answer-script-877141-21(1).PDF](https://github.com/godgladson-stack/GE-Evaluation/blob/main/answer-script-877141-21(1).PDF)"/>>
-    <div class="controls">
-        <button onclick="setTool('X')">Mark Wrong (X)</button>
-        <button onclick="setTool('/')">Mark Correct (/)</button>
-        <button onclick="clearMarks()">Clear Marks</button>
-    </div>
-    <center><canvas id="paperCanvas" width="800" height="1000"></canvas></center>
-    <div class="grading">
-        <label for="totalMarksInput">Total Marks:</label>
-        <input type="number" id="totalMarksInput" placeholder="Enter total marks" onchange="calculateFinalMarks()">
-        <br><br>
-        <label>Final Marks:</label>
-        <span id="finalMarksDisplay">0</span>
-        <button onclick="submitEvaluation()">Submit Marks</button>
+
+    <div class="container">
+        <h2>Evaluate Student Paper</h2>
+        <div id="assignedPaperDisplay">Loading Details...</div>
+
+        <div class="controls">
+            <button onclick="setTool('X')">Mark Wrong (X)</button>
+            <button onclick="setTool('/')">Mark Correct (/)</button>
+            <button onclick="clearMarks()">Clear Marks</button>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="paperCanvas" width="800" height="1000"></canvas>
+        </div>
+
+        <div class="grading">
+            <div class="grading-group">
+                <label for="totalMarksInput">Total Marks:</label>
+                <input type="number" id="totalMarksInput" placeholder="Enter total" onchange="calculateFinalMarks()">
+            </div>
+            
+            <div class="grading-group">
+                <label>Final Marks:</label>
+                <span id="finalMarksDisplay">0.0</span>
+            </div>
+
+            <button class="submit-btn" onclick="submitEvaluation()">Submit Marks</button>
+        </div>
     </div>
 
     <script>
-        // Check both possible keys for logged in teacher or assigned teacher
         const currentTeacher = localStorage.getItem("loggedInTeacher") || localStorage.getItem("assignedTeacher");
         const paper = localStorage.getItem("assignedPaper_" + currentTeacher) || localStorage.getItem("assignedPaper");
         
@@ -45,7 +200,6 @@
         ctx.strokeStyle = "red";
         ctx.lineWidth = 3;
 
-        // Load image onto canvas if paper exists
         let bgImg = new Image();
         if (paper) {
             bgImg.src = paper;
@@ -96,20 +250,20 @@
             document.getElementById("finalMarksDisplay").innerText = finalMarks.toFixed(1);
         }
 
-       function submitEvaluation() {
-  const canvas = document.getElementById("paperCanvas");
-  const canvasImage = canvas.toDataURL("image/png");
-  const finalMarks = document.getElementById("finalMarksDisplay").innerText;
-  const evaluationId = 'eval_' + new Date().getTime();
+        function submitEvaluation() {
+            const canvas = document.getElementById("paperCanvas");
+            const canvasImage = canvas.toDataURL("image/png");
+            const finalMarks = document.getElementById("finalMarksDisplay").innerText;
+            const evaluationId = 'eval_' + new Date().getTime();
 
-  localStorage.setItem("studentMarks_" + evaluationId, JSON.stringify({
-    teacher: currentTeacher,
-    paper: canvasImage,
-    marks: finalMarks
-  }));
-  alert("Evaluation submitted with marks: " + finalMarks);
-  window.location.href = "admin.html";
-}
+            localStorage.setItem("studentMarks_" + evaluationId, JSON.stringify({
+                teacher: currentTeacher,
+                paper: canvasImage,
+                marks: finalMarks
+            }));
+            alert("Evaluation submitted with marks: " + finalMarks);
+            window.location.href = "admin.html";
+        }
     </script>
 </body>
 </html>
