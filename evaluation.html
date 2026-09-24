@@ -5,201 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluate Student Paper</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1000px;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        }
-
-        h2 {
-            color: #1a252f;
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 24px;
-            font-weight: 600;
-        }
-
-        #assignedPaperDisplay {
-            background-color: #eef2f5;
-            padding: 12px 20px;
-            border-radius: 8px;
-            color: #4a5568;
-            font-weight: 500;
-            margin-bottom: 25px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        button {
-            background-color: #3182ce;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        button:hover {
-            background-color: #2b6cb0;
-            transform: translateY(-1px);
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; padding: 30px; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 1000px; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
+        h2 { color: #1a252f; text-align: center; margin-bottom: 15px; font-size: 24px; font-weight: 600; }
+        #assignedPaperDisplay { background-color: #eef2f5; padding: 12px 20px; border-radius: 8px; color: #4a5568; font-weight: 500; margin-bottom: 25px; text-align: center; border: 1px solid #e2e8f0; }
+        .controls { display: flex; justify-content: center; gap: 12px; margin-bottom: 25px; }
+        button { background-color: #3182ce; color: white; border: none; padding: 10px 18px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
+        button:hover { background-color: #2b6cb0; transform: translateY(-1px); }
         .controls button:nth-child(1) { background-color: #e53e3e; }
         .controls button:nth-child(1):hover { background-color: #c53030; }
-
         .controls button:nth-child(2) { background-color: #38a169; }
         .controls button:nth-child(2):hover { background-color: #2f855a; }
-
         .controls button:nth-child(3) { background-color: #718096; }
         .controls button:nth-child(3):hover { background-color: #4a5568; }
-
-        .canvas-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
-
-        #paperCanvas {
-            border: 2px solid #cbd5e0;
-            border-radius: 8px;
-            cursor: crosshair;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .grading {
-            background-color: #f8fafc;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .grading-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        label {
-            font-weight: 600;
-            color: #4a5568;
-        }
-
-        input[type="number"] {
-            padding: 10px 12px;
-            font-size: 15px;
-            width: 130px;
-            border: 1px solid #cbd5e0;
-            border-radius: 6px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        input[type="number"]:focus {
-            border-color: #3182ce;
-        }
-
-        #finalMarksDisplay {
-            font-size: 18px;
-            font-weight: 700;
-            color: #2b6cb0;
-            background: #ebf8ff;
-            padding: 6px 14px;
-            border-radius: 6px;
-            border: 1px solid #bee3f8;
-        }
-
-        .submit-btn {
-            background-color: #2b6cb0;
-            padding: 12px 24px;
-            font-size: 15px;
-        }
-
-        .submit-btn:hover {
-            background-color: #2c5282;
-        }
+        .canvas-container { display: flex; justify-content: center; margin-bottom: 25px; }
+        #paperCanvas { border: 2px solid #cbd5e0; border-radius: 8px; cursor: crosshair; background-color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .grading { background-color: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; }
+        .grading-group { display: flex; align-items: center; gap: 10px; }
+        label { font-weight: 600; color: #4a5568; }
+        input[type="number"] { padding: 10px 12px; font-size: 15px; width: 130px; border: 1px solid #cbd5e0; border-radius: 6px; outline: none; transition: border-color 0.2s; }
+        input[type="number"]:focus { border-color: #3182ce; }
+        #finalMarksDisplay { font-size: 18px; font-weight: 700; color: #2b6cb0; background: #ebf8ff; padding: 6px 14px; border-radius: 6px; border: 1px solid #bee3f8; }
+        .submit-btn { background-color: #2b6cb0; padding: 12px 24px; font-size: 15px; }
+        .submit-btn:hover { background-color: #2c5282; }
     </style>
 </head>
 <body>
-
     <div class="container">
         <h2>Evaluate Student Paper</h2>
         <div id="assignedPaperDisplay">Loading Details...</div>
-
         <div class="controls">
             <button onclick="setTool('X')">Mark Wrong (X)</button>
             <button onclick="setTool('/')">Mark Correct (/)</button>
             <button onclick="clearMarks()">Clear Marks</button>
         </div>
-
         <div class="canvas-container">
             <canvas id="paperCanvas" width="800" height="1000"></canvas>
         </div>
-
         <div class="grading">
             <div class="grading-group">
                 <label for="totalMarksInput">Total Marks:</label>
                 <input type="number" id="totalMarksInput" placeholder="Enter total" onchange="calculateFinalMarks()">
             </div>
-            
             <div class="grading-group">
                 <label>Final Marks:</label>
                 <span id="finalMarksDisplay">0.0</span>
             </div>
-
             <button class="submit-btn" onclick="submitEvaluation()">Submit Marks</button>
         </div>
     </div>
-
     <script>
-        const currentTeacher = localStorage.getItem("loggedInTeacher") || localStorage.getItem("assignedTeacher");
-        const paper = localStorage.getItem("assignedPaper_" + currentTeacher) || localStorage.getItem("assignedPaper");
-        
-        document.getElementById("assignedPaperDisplay").innerText = "Assigned Teacher: " + (currentTeacher || "None") + " | Paper: " + (paper || "No Paper Assigned");
-
+        const currentTeacher = "User2601201";
+        const paper = localStorage.getItem("uploadedPaperData_" + currentTeacher);
+        document.getElementById("assignedPaperDisplay").innerText = "Assigned Teacher: " + currentTeacher + " | Paper: " + (paper ? "Paper Loaded" : "No Paper Found");
         const canvas = document.getElementById("paperCanvas");
         const ctx = canvas.getContext("2d");
         let currentTool = 'X';
         let xCount = 0;
         let slashCount = 0;
-
         ctx.strokeStyle = "red";
         ctx.lineWidth = 3;
-
         let bgImg = new Image();
         if (paper) {
             bgImg.src = paper;
@@ -207,26 +73,20 @@
                 ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
             };
         }
-
         function setTool(tool) { currentTool = tool; }
-
-        function clearMarks() { 
-            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        function clearMarks() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (paper && bgImg.complete) {
                 ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
             }
-            xCount = 0;
-            slashCount = 0;
-            calculateFinalMarks();
+            xCount = 0; SlashCount = 0; calculateFinalMarks();
         }
-
         canvas.addEventListener("click", (e) => {
             const rect = canvas.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
             drawMark(x, y);
         });
-
         function drawMark(x, y) {
             ctx.beginPath();
             ctx.strokeStyle = "red";
@@ -239,27 +99,20 @@
                 ctx.moveTo(x + 10, y - 10); ctx.lineTo(x - 10, y + 10);
                 slashCount++;
             }
-            ctx.stroke();
-            calculateFinalMarks();
+            ctx.stroke(); calculateFinalMarks();
         }
-
         function calculateFinalMarks() {
             const totalMarks = parseFloat(document.getElementById("totalMarksInput").value) || 0;
             const deduction = (xCount * 1.0) + (slashCount * 1.5);
             const finalMarks = Math.max(0, totalMarks - deduction);
             document.getElementById("finalMarksDisplay").innerText = finalMarks.toFixed(1);
         }
-
         function submitEvaluation() {
-            const canvas = document.getElementById("paperCanvas");
             const canvasImage = canvas.toDataURL("image/png");
             const finalMarks = document.getElementById("finalMarksDisplay").innerText;
             const evaluationId = 'eval_' + new Date().getTime();
-
             localStorage.setItem("studentMarks_" + evaluationId, JSON.stringify({
-                teacher: currentTeacher,
-                paper: canvasImage,
-                marks: finalMarks
+                teacher: currentTeacher, paper: canvasImage, marks: finalMarks
             }));
             alert("Evaluation submitted with marks: " + finalMarks);
             window.location.href = "admin.html";
