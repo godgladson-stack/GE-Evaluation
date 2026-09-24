@@ -67,10 +67,12 @@
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     if (key.startsWith("studentMarks_")) {
-      const teacher = key.replace("studentMarks_", "");
-      const marks = localStorage.getItem(key);
-      resultsDisplay.innerHTML += `<li>Examiner: ${teacher} | Marks: ${marks}</li>`;
+      const evalData = JSON.parse(localStorage.getItem(key));
+      resultsDisplay.innerHTML += `<li>Paper: ${evalData.paper} | Examiner: ${evalData.teacher} | Marks: ${evalData.marks}</li>`;
     }
+  }
+  resultsDisplay.innerHTML += "</ul>";
+</script>
   }
   resultsDisplay.innerHTML += "</ul>";
 </script>
