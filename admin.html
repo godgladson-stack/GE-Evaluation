@@ -58,7 +58,22 @@
         <h3>Review Evaluations</h3>
         <p>View completed evaluations and assign final grades.</p>
     </div>
+<div id="evaluationsDisplay"></div>
 
+<script>
+  const resultsDisplay = document.getElementById("evaluationsDisplay");
+  resultsDisplay.innerHTML = "<h3>Evaluations Received</h3><ul>";
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key.startsWith("studentMarks_")) {
+      const teacher = key.replace("studentMarks_", "");
+      const marks = localStorage.getItem(key);
+      resultsDisplay.innerHTML += `<li>Examiner: ${teacher} | Marks: ${marks}</li>`;
+    }
+  }
+  resultsDisplay.innerHTML += "</ul>";
+</script>
     <script>
         function uploadPaper() {
             let fileInput = document.getElementById('paperInput').files[0];
