@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EXAMINER 1 Login</title>
+  <title>Examiner Login</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #f7f9fc;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #f7f9fc;
       margin: 0;
     }
     .login-container {
       background-color: white;
-      padding: 30px;
+      padding: 40px;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      width: 400px;
+      width: 350px;
       text-align: center;
     }
     h2 {
@@ -34,34 +34,35 @@
     h4 {
       color: #777;
       font-size: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       text-align: left;
     }
     label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       color: #666;
+      font-size: 14px;
     }
     input[type="text"], input[type="password"] {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
     }
     button {
       width: 100%;
-      padding: 10px;
       background-color: #007bff;
       color: white;
       border: none;
       border-radius: 4px;
-      cursor: pointer;
+      padding: 12px;
       font-size: 16px;
-      margin-top: 15px;
+      cursor: pointer;
+      font-weight: bold;
     }
     button:hover {
       background-color: #0056b3;
@@ -71,24 +72,33 @@
 <body>
   <div class="login-container">
     <h2>EXAMINER LOGIN</h2>
-    <h3>DIRECTORATE OF TECHNICAL EDUCATION EXAMINIATION TAMIL NADU-2026</h3>
-    <h4>OSDE EVALUATAION PORTAL</h4>
+    <h3>DIRECTORATE OF TECHNICAL EDUCATION EXAMINATION TAMIL NADU - 2026</h3>
+    <h4>OSDE EVALUATION PORTAL</h4>
+    
     <div class="form-group">
-      <label for="username">Username:</label>
-      <input type="text" id="User2601201" name="username">
+      <label>Username</label>
+      <input type="text" id="username" placeholder="Enter Username">
     </div>
- <script>
-  function checkLogin() {
-    var user = document.getElementById("User2601201").value;
-    var pass = document.getElementById("2601201").value;
-
-    if (user === "User2601201" && pass === "2601201") {
-      window.location.href = "Examiner dashboard.html";
-    } else {
-      alert("தவறான பயனர்பெயர் அல்லது கடவுச்சொல்.");
-    }
-  }
-</script>
+    
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter Password">
+    </div>
+    
+    <button onclick="checkLogin()">Login</button>
   </div>
+
+  <script>
+    function checkLogin() {
+      var user = document.getElementById("username").value;
+      var pass = document.getElementById("password").value;
+
+      if (user === "User2601201" && pass === "1234") {
+        window.location.href = "Examiner dashboard.html";
+      } else {
+        alert("தவறான பயனர்பெயர் அல்லது கடவுச்சொல்.");
+      }
+    }
+  </script>
 </body>
 </html>
