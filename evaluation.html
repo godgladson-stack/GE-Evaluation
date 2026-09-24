@@ -36,9 +36,9 @@
         <h2>Evaluate Student Paper</h2>
         <div id="assignedPaperDisplay">Loading Details...</div>
         <div class="controls">
-            <button onclick="setTool('X')">Mark Wrong (X)</button>
-            <button onclick="setTool('/')">Mark Correct (/)</button>
-            <button onclick="clearMarks()">Clear Marks</button>
+            <button type="button" onclick="setTool('X')">Mark Wrong (X)</button>
+            <button type="button" onclick="setTool('/')">Mark Correct (/)</button>
+            <button type="button" onclick="clearMarks()">Clear Marks</button>
         </div>
         <div class="canvas-container">
             <canvas id="paperCanvas" width="800" height="1000"></canvas>
@@ -46,7 +46,7 @@
         <div class="grading">
             <div class="grading-group">
                 <label for="totalMarksInput">Total Marks:</label>
-                <input type="number" id="totalMarksInput" placeholder="Enter total" onchange="calculateFinalMarks()">
+                <input type="number" id="totalMarksInput" placeholder="Enter total" oninput="calculateFinalMarks()">
             </div>
             <div class="grading-group">
                 <label>Final Marks:</label>
@@ -59,6 +59,7 @@
         const currentTeacher = "User2601201";
         const paper = localStorage.getItem("uploadedPaperData_" + currentTeacher);
         document.getElementById("assignedPaperDisplay").innerText = "Assigned Teacher: " + currentTeacher + " | Paper: " + (paper ? "Paper Loaded" : "No Paper Found");
+        
         const canvas = document.getElementById("paperCanvas");
         const ctx = canvas.getContext("2d");
         let currentTool = 'X';
@@ -66,6 +67,7 @@
         let slashCount = 0;
         ctx.strokeStyle = "red";
         ctx.lineWidth = 3;
+        
         let bgImg = new Image();
         if (paper) {
             bgImg.src = paper;
@@ -73,20 +75,28 @@
                 ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
             };
         }
-        function setTool(tool) { currentTool = tool; }
+
+        function setTool(tool) { 
+            currentTool = tool; 
+        }
+
         function clearMarks() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (paper && bgImg.complete) {
                 ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
             }
-            xCount = 0; SlashCount = 0; calculateFinalMarks();
+            xCount = 0; 
+            slashCount = 0; 
+            calculateFinalMarks();
         }
+
         canvas.addEventListener("click", (e) => {
             const rect = canvas.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
             drawMark(x, y);
         });
+
         function drawMark(x, y) {
             ctx.beginPath();
             ctx.strokeStyle = "red";
@@ -99,23 +109,35 @@
                 ctx.moveTo(x + 10, y - 10); ctx.lineTo(x - 10, y + 10);
                 slashCount++;
             }
-            ctx.stroke(); calculateFinalMarks();
+            ctx.stroke(); 
+            calculateFinalMarks();
         }
+
         function calculateFinalMarks() {
             const totalMarks = parseFloat(document.getElementById("totalMarksInput").value) || 0;
             const deduction = (xCount * 1.0) + (slashCount * 1.5);
             const finalMarks = Math.max(0, totalMarks - deduction);
             document.getElementById("finalMarksDisplay").innerText = finalMarks.toFixed(1);
         }
+
         function submitEvaluation() {
-            const canvasImage = canvas.toDataURL("image/png");
-            const finalMarks = document.getElementById("finalMarksDisplay").innerText;
-            const evaluationId = 'eval_' + new Date().getTime();
-            localStorage.setItem("studentMarks_" + evaluationId, JSON.stringify({
-                teacher: currentTeacher, paper: canvasImage, marks: finalMarks
-            }));
-            alert("Evaluation submitted with marks: " + finalMarks);
-            window.location.href = "admin.html";
+            try {
+                const canvasImage = canvas.toDataURL("image/png");
+                const finalMarks = document.getElementById("finalMarksDisplay").innerText;
+                const evaluationId = 'eval_' + new Date().getTime();
+                
+                localStorage.setItem("studentMarks_" + evaluationId, JSON.stringify({
+                    teacher: currentTeacher, 
+                    paper: canvasImage, 
+                    marks: finalMarks
+                }));
+                
+                alert("Evaluation submitted successfully with marks: " + finalMarks);
+                window.location.href = "admin.html";
+            } catch (err) {
+                console.error("Submit Error:", err);
+                alert("Error submitting evaluation: " + err.message);
+            }
         }
     </script>
 </body>
