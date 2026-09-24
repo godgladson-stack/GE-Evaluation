@@ -58,26 +58,20 @@
         <h3>Review Evaluations</h3>
         <p>View completed evaluations and assign final grades.</p>
     </div>
-<div id="evaluationsDisplay"></div>
+function submitEvaluation() {
+  const canvas = document.getElementById("paperCanvas");
+  const canvasImage = canvas.toDataURL("image/png");
+  const finalMarks = document.getElementById("finalMarksDisplay").innerText;
+  const evaluationId = 'eval_' + new Date().getTime();
 
-<script>
-  const resultsDisplay = document.getElementById("evaluationsDisplay");
-  resultsDisplay.innerHTML = "<h3>Evaluations Received</h3>";
-
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key.startsWith("studentMarks_")) {
-      const evalData = JSON.parse(localStorage.getItem(key));
-      resultsDisplay.innerHTML += `
-        <div>
-          <p>Paper:</p>
-          <img src="${evalData.paper}" alt="Evaluated Paper" style="width: 200px; height: auto;" />
-          <p>Examiner: ${evalData.teacher} | Marks: ${evalData.marks}</p>
-          <hr />
-        </div>
-      `;
-    }
-  }
+  localStorage.setItem("studentMarks_" + evaluationId, JSON.stringify({
+    teacher: currentTeacher,
+    paper: canvasImage,
+    marks: finalMarks
+  }));
+  alert("Evaluation submitted with marks: " + finalMarks);
+  window.location.href = "admin.html";
+}
 </script>
         function uploadPaper() {
             let fileInput = document.getElementById('paperInput').files[0];
