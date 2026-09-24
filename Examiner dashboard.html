@@ -1,124 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Examiner Dashboard</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .dashboard-container { display: flex; align-items: flex-start; gap: 20px; }
-        .details-box { border: 1px solid #ccc; padding: 15px; width: 300px; border-radius: 5px; }
-        .edit-box { display: none; margin-top: 15px; border: 1px dashed #aaa; padding: 15px; width: 300px; }
-        button { padding: 10px 15px; font-size: 16px; cursor: pointer; margin-top: 15px; }
-        .photo-box { width: 100px; height: 100px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #f9f9f9; }
-        img { max-width: 100%; max-height: 100%; object-fit: cover; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examiner Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f9fc;
+      margin: 0;
+      padding: 0;
+    }
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+    }
+    .card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h3 {
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+      color: #333;
+      margin-top: 0;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: #e9ecef;
+    }
+    .profile-section {
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
+  <div class="dashboard-container">
+    <header>
+      <h1>Examiner Dashboard</h1>
+    </header>
 
-   <center> <h2>Examiner OSDE Evaluation Dashboard</h2>
-<div class="dashboard-container">
-        <div class="details-box">
-            <h3>Examiner Profile Details</h3>
-            <p><strong>Name:</strong> <span id="displayName">LENIN G</span></p>
-            <p><strong>OSDE Number:</strong> <span id="displayOSDE">GE-0121901</span></p>
-            <p><strong>Institution Name:</strong> <span id="displayInstName">GLADSON EDCUATION INSTITUTE OF COMMERCE</span></p>
-            <p><strong>Institution Code:</strong> <span id="displayInstCode">IC12190</span></p>
-            <p><strong>Gmail ID:</strong> <span id="displayEmail">lenin@gmail.com</span></p>
-            <p><strong>Assigned Details:</strong> <span id="displayDetails">No details assigned</span></p>
-            <button onclick="showEditForm()">Edit Profile</button>
+    <div class="main-content">
+      <section class="card profile-section">
+        <h3>User Information</h3>
+        <div class="form-group">
+          <label>Examiner ID</label>
+          <input type="text" value="20108701" readonly>
         </div>
-
-        <div class="photo-box">
-            <img id="displayPhoto" src="" alt="Examiner Photo">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" value="ASOKAN D" readonly>
         </div>
+        <div class="form-group">
+          <label>Designation / Role</label>
+          <input type="text" value="Examiner" readonly>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>Pending Evaluations</h3>
+        <p>No new papers assigned at the moment.</p>
+      </section>
     </div>
-
-    <div id="editForm" class="edit-box">
-        <h3>Edit Profile Details</h3>
-        <label>Photo URL:</label><br>
-        <input type="text" id="editPhoto"><br><br>
-        <label>Name:</label><br>
-        <input type="text" id="editName"><br><br>
-        <label>OSTE Number:</label><br>
-        <input type="text" id="editOSTE"><br><br>
-        <label>Institution Name:</label><br>
-        <input type="text" id="editInstName"><br><br>
-        <label>Institution Code:</label><br>
-        <input type="text" id="editInstCode"><br><br>
-        <label>Gmail ID:</label><br>
-        <input type="text" id="editEmail"><br><br>
-        <label>Assigned Details:</label><br>
-        <input type="text" id="editDetails"><br><br>
-        <button onclick="saveProfile()">Save Profile</button>
-        <button onclick="hideEditForm()">Cancel</button>
-    </div>
-
-    <button onclick="goToNext()">Next</button></center>
-
-    <script>
-        const examinerID = localStorage.getItem("loggedInExaminer");
-
-        function loadProfile() {
-            document.getElementById("displayExaminerID").innerText = examinerID;
-
-            const name = localStorage.getItem("name_" + examinerID);
-            const oste = localStorage.getItem("oste_" + examinerID);
-            const instName = localStorage.getItem("instName_" + examinerID);
-            const instCode = localStorage.getItem("instCode_" + examinerID);
-            const email = localStorage.getItem("email_" + examinerID);
-            const details = localStorage.getItem("details_" + examinerID);
-            const photo = localStorage.getItem("photo_" + examinerID);
-
-            if (name) document.getElementById("displayName").innerText = name;
-            if (oste) document.getElementById("displayOSTE").innerText = oste;
-            if (instName) document.getElementById("displayInstName").innerText = instName;
-            if (instCode) document.getElementById("displayInstCode").innerText = instCode;
-            if (email) document.getElementById("displayEmail").innerText = email;
-            if (details) document.getElementById("displayDetails").innerText = details;
-            
-            const photoImg = document.getElementById("displayPhoto");
-            if (photo) {
-                photoImg.src = photo;
-                photoImg.style.display = 'block';
-            } else {
-                photoImg.style.display = 'none';
-            }
-        }
-
-        loadProfile();
-
-        function showEditForm() {
-            document.getElementById("editName").value = document.getElementById("displayName").innerText !== "N/A" ? document.getElementById("displayName").innerText : "";
-            document.getElementById("editOSTE").value = document.getElementById("displayOSTE").innerText !== "N/A" ? document.getElementById("displayOSTE").innerText : "";
-            document.getElementById("editInstName").value = document.getElementById("displayInstName").innerText !== "N/A" ? document.getElementById("displayInstName").innerText : "";
-            document.getElementById("editInstCode").value = document.getElementById("displayInstCode").innerText !== "N/A" ? document.getElementById("displayInstCode").innerText : "";
-            document.getElementById("editEmail").value = document.getElementById("displayEmail").innerText !== "N/A" ? document.getElementById("displayEmail").innerText : "";
-            document.getElementById("editDetails").value = document.getElementById("displayDetails").innerText !== "No details assigned" ? document.getElementById("displayDetails").innerText : "";
-            document.getElementById("editPhoto").value = localStorage.getItem("photo_" + examinerID) || "";
-
-            document.getElementById("editForm").style.display = 'block';
-        }
-
-        function hideEditForm() {
-            document.getElementById("editForm").style.display = 'none';
-        }
-
-        function saveProfile() {
-            localStorage.setItem("name_" + examinerID, document.getElementById("editName").value);
-            localStorage.setItem("oste_" + examinerID, document.getElementById("editOSTE").value);
-            localStorage.setItem("instName_" + examinerID, document.getElementById("editInstName").value);
-            localStorage.setItem("instCode_" + examinerID, document.getElementById("editInstCode").value);
-            localStorage.setItem("email_" + examinerID, document.getElementById("editEmail").value);
-            localStorage.setItem("details_" + examinerID, document.getElementById("editDetails").value);
-            localStorage.setItem("photo_" + examinerID, document.getElementById("editPhoto").value);
-
-            loadProfile();
-            hideEditForm();
-        }
+     }
 
         function goToNext() {
             window.location.href = "evaluation.html";
         }
-    </script>
-
+  </div>
 </body>
 </html>
