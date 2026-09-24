@@ -96,12 +96,17 @@
             document.getElementById("finalMarksDisplay").innerText = finalMarks.toFixed(1);
         }
 
-        function submitEvaluation() {
-            const finalMarks = document.getElementById("finalMarksDisplay").innerText;
-            localStorage.setItem("studentMarks_" + currentTeacher, finalMarks);
-            alert("Evaluation submitted with marks: " + finalMarks);
-            window.location.href = "index.html";
-        }
+       function submitEvaluation() {
+  const finalMarks = document.getElementById("finalMarksDisplay").innerText;
+  const evaluationId = 'eval_' + new Date().getTime();
+  localStorage.setItem("studentMarks_" + evaluationId, JSON.stringify({
+    teacher: currentTeacher,
+    paper: paper,
+    marks: finalMarks
+  }));
+  alert("Evaluation submitted with marks: " + finalMarks);
+  window.location.href = "admin.html";
+}
     </script>
 </body>
 </html>
