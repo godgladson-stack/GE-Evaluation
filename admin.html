@@ -62,18 +62,23 @@
 
 <script>
   const resultsDisplay = document.getElementById("evaluationsDisplay");
-  resultsDisplay.innerHTML = "<h3>Evaluations Received</h3><ul>";
+  resultsDisplay.innerHTML = "<h3>Evaluations Received</h3>";
 
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     if (key.startsWith("studentMarks_")) {
       const evalData = JSON.parse(localStorage.getItem(key));
-      resultsDisplay.innerHTML += `<li>Paper: ${evalData.paper} | Examiner: ${evalData.teacher} | Marks: ${evalData.marks}</li>`;
+      resultsDisplay.innerHTML += `
+        <div>
+          <p>Paper:</p>
+          <img src="${evalData.paper}" alt="Evaluated Paper" style="width: 200px; height: auto;" />
+          <p>Examiner: ${evalData.teacher} | Marks: ${evalData.marks}</p>
+          <hr />
+        </div>
+      `;
     }
   }
-  resultsDisplay.innerHTML += "</ul>";
 </script>
-
         function uploadPaper() {
             let fileInput = document.getElementById('paperInput').files[0];
             if (!fileInput) {
