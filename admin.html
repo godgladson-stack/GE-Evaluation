@@ -127,34 +127,23 @@
             } else {
                 alert("Please upload the paper first before assigning.");
             }
-        }
-
-        function deleteAssignment(button) {
-            button.parentElement.remove();
-        function displayEvaluatedPapers() {
-    const assignedList = document.getElementById("assignedList");
-    assignedList.innerHTML = ''; 
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key.startsWith("studentMarks_")) {
-            const evalData = JSON.parse(localStorage.getItem(key));
-            const evalItem = document.createElement("div");
-            evalItem.className = "assignment-item";
-            evalItem.innerHTML = `
-                <span><strong>Teacher:</strong> ${evalData.teacher} | <strong>Marks:</strong> ${evalData.marks}</span>
-                <button onclick="viewPaper('${key}')">View Paper</button>
-            `;
-            assignedList.appendChild(evalItem);
+       function displayEvaluatedPapers() {
+        const assignedList = document.getElementById("assignedList");
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith("studentMarks_")) {
+                const evalData = JSON.parse(localStorage.getItem(key));
+                const evalItem = document.createElement("div");
+                evalItem.className = "assignment-item";
+                evalItem.innerHTML = `
+                    <span><strong>Teacher:</strong> ${evalData.teacher} | <strong>Marks:</strong> ${evalData.marks}</span>
+                    <button onclick="window.location.href='evaluation.html'">View Paper</button>
+                `;
+                assignedList.appendChild(evalItem);
+            }
         }
     }
-}
-
-function viewPaper(key) {
-    localStorage.setItem("currentViewedPaper", key);
-    window.location.href = 'evaluation.html';
-}
-
-document.addEventListener("DOMContentLoaded", displayEvaluatedPapers);
+    document.addEventListener("DOMContentLoaded", displayEvaluatedPapers);
     </script>
 </body>
 </html>
