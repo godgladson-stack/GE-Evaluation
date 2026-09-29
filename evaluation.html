@@ -139,6 +139,17 @@
                 alert("Error submitting evaluation: " + err.message);
             }
         }
+        window.onload = function() {
+    const paperKey = localStorage.getItem("currentViewedPaper");
+    if (paperKey) {
+        const evalData = JSON.parse(localStorage.getItem(paperKey));
+        if (evalData) {
+            document.getElementById('teacherName').value = evalData.teacher;
+            document.getElementById('totalMarks').value = evalData.marks;
+            // Additional logic to re-apply markings on the paper if applicable
+        }
+    }
+};
     </script>
 </body>
 </html>
