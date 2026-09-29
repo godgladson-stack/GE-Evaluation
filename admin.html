@@ -21,7 +21,7 @@
         .collapsible { background-color: #e9ecef; color: #333; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; outline: none; font-size: 16px; border-radius: 4px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
         .collapsible:after { content: '\25BC'; font-size: 12px; }
         .active:after { content: '\25B2'; }
-        .content { padding: 0 15px; display: none; background-color: white; overflow: hidden; margin-bottom: 10px; border: 1px solid #ddd; border-top: none; }
+        .content { padding: 15px; display: none; background-color: white; overflow: hidden; margin-bottom: 10px; border: 1px solid #ddd; border-top: none; }
         .assignment-item { background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #f5c6cb; }
         .delete-btn { background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 14px; }
         .delete-btn:hover { background-color: #bd2130; }
@@ -74,18 +74,21 @@
 
     <script>
         // Collapsible logic
-        var col = document.getElementsByClassName("collapsible");
-        for (let i = 0; i < col.length; i++) {
-            col[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            var col = document.getElementsByClassName("collapsible");
+            for (let i = 0; i < col.length; i++) {
+                col[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+            }
+            displayEvaluatedPapers();
+        });
 
         let uploadedPaperBase64 = "";
 
@@ -127,41 +130,33 @@
             } else {
                 alert("Please upload the paper first before assigning.");
             }
-       function displayEvaluatedPapers() {
-        const assignedList = document.getElementById("assignedList");
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key.startsWith("studentMarks_")) {
-                const evalData = JSON.parse(localStorage.getItem(key));
-                const evalItem = document.createElement("div");
-                evalItem.className = "assignment-item";
-                evalItem.innerHTML = `
-                    <span><strong>Teacher:</strong> ${evalData.teacher} | <strong>Marks:</strong> ${evalData.marks}</span>
-                    <button onclick="window.location.href='evaluation.html'">View Paper</button>
-                function displayEvaluatedPapers() {
-    const assignedList = document.getElementById("assignedList");
-    assignedList.innerHTML = ''; 
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key.startsWith("studentMarks_")) {
-            const evalData = JSON.parse(localStorage.getItem(key));
-            const evalItem = document.createElement("div");
-            evalItem.className = "assignment-item";
-            evalItem.innerHTML = `
-                <span><strong>Teacher:</strong> ${evalData.teacher} | <strong>Marks:</strong> ${evalData.marks}</span>
-                <button onclick="viewPaper('${key}')">View Paper</button>
-            `;
-            assignedList.appendChild(evalItem);
         }
-    }
-}
 
-function viewPaper(key) {
-    localStorage.setItem("currentViewedPaper", key);
-    window.location.href = 'evaluation.html';
-}
+        function deleteAssignment(btn) {
+            btn.parentElement.remove();
+        }
 
-document.addEventListener("DOMContentLoaded", displayEvaluatedPapers);
+        function displayEvaluatedPapers() {
+            const assignedList = document.getElementById("assignedList");
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith("studentMarks_")) {
+                    const evalData = JSON.parse(localStorage.getItem(key));
+                    const evalItem = document.createElement("div");
+                    evalItem.className = "assignment-item";
+                    evalItem.innerHTML = `
+                        <span><strong>Teacher:</strong> ${evalData.teacher || 'N/A'} | <strong>Marks:</strong> ${evalData.marks || 'N/A'}</span>
+                        <button onclick="viewPaper('${key}')">View Paper</button>
+                    `;
+                    assignedList.appendChild(evalItem);
+                }
+            }
+        }
+
+        function viewPaper(key) {
+            localStorage.setItem("currentViewedPaper", key);
+            window.location.href = 'evaluation.html';
+        }
     </script>
 </body>
 </html>
