@@ -120,20 +120,27 @@
             document.getElementById("finalMarksDisplay").innerText = finalMarks.toFixed(1);
         }
 
-        function submitEvaluation() {
-            try {
-                const canvasImage = canvas.toDataURL("image/png");
-                const finalMarks = document.getElementById("finalMarksDisplay").innerText;
-                const evaluationId = 'eval_' + new Date().getTime();
-                
-                localStorage.setItem("studentMarks_" + evaluationId, JSON.stringify({
-                    teacher: currentTeacher, 
-                    paper: canvasImage, 
-                    marks: finalMarks
-                }));
-                
-                alert("Evaluation submitted successfully with marks: " + finalMarks);
-                window.location.href = "admin.html";
+       // Function to submit evaluation and save to localStorage
+function submitEvaluation() {
+    const canvas = document.getElementById('paperCanvas');
+    const canvasImage = canvas.toDataURL("image/png");
+    const finalMarks = document.getElementById('finalMarks').textContent;
+    const evaluationId = 'eval_' + new Date().getTime();
+
+    // Retrieve bank details from localStorage if available
+    const examinerDetails = JSON.parse(localStorage.getItem("examinerBankDetails"));
+
+    const evaluationData = {
+        teacher: "User2601201",  // Replace with dynamic examiner ID
+        paper: canvasImage,
+        marks: finalMarks,
+        examinerDetails: examinerDetails 
+    };
+
+    localStorage.setItem("studentMarks_" + evaluationId, JSON.stringify(evaluationData));
+    alert("Evaluation submitted successfully with marks: " + finalMarks);
+    window.location.href = 'admin.html';
+}
             } catch (err) {
                 console.error("Submit Error:", err);
                 alert("Error submitting evaluation: " + err.message);
