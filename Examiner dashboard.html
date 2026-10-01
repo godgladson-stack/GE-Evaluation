@@ -168,7 +168,16 @@
         return;
       }
 
-      // Store form data or process here
+      const bankDetails = {
+        bankName: document.getElementById('bankName').value,
+        branch: document.getElementById('bankBranch').value,
+        accountNo: document.getElementById('accountNumber').value,
+        ifscCode: document.getElementById('ifscCode').value,
+        accountName: "ASOKAN D"
+      };
+
+      localStorage.setItem("examinerBankDetails", JSON.stringify(bankDetails));
+
       alert("Registration submitted and password updated successfully!");
       window.location.href = 'evaluation.html';
     }
