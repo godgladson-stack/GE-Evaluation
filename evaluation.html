@@ -147,17 +147,29 @@
             }
         }
 
+       // ... (previous JavaScript remains the same up to submitEvaluation)
+
         window.addEventListener("load", function() {
             const paperKey = localStorage.getItem("currentViewedPaper");
             if (paperKey) {
                 const evalData = JSON.parse(localStorage.getItem(paperKey));
                 if (evalData) {
-                    const teacherInput = document.getElementById('teacherName');
                     const marksInput = document.getElementById('totalMarksInput');
-                    if (teacherInput) teacherInput.value = evalData.teacher || '';
-                    if (marksInput) marksInput.value = evalData.marks || '';
+                    if (marksInput && evalData.marks) marksInput.value = evalData.marks;
+                    
+                    const finalMarksDisplay = document.getElementById('finalMarksDisplay');
+                    if (finalMarksDisplay && evalData.marks) finalMarksDisplay.innerText = evalData.marks;
+
+                    const canvas = document.getElementById("paperCanvas");
+                    const ctx = canvas.getContext("2d");
+                    const img = new Image();
+                    img.src = evalData.paper;
+                    img.onload = function() {
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    };
                 }
             }
+        });
         });
     </script>
 </body>
