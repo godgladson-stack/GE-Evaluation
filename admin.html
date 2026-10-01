@@ -70,6 +70,11 @@
             <h3>Assigned Papers List</h3>
             <div id="assignedList"></div>
         </section>
+
+        <section class="card">
+            <h3>Examiner Bank Details</h3>
+            <div id="examinerDetailsDisplay">No details available.</div>
+        </section>
     </div>
 
     <script>
@@ -157,26 +162,21 @@
             localStorage.setItem("currentViewedPaper", key);
             window.location.href = 'evaluation.html';
         }
-        <div class="card">
-    <h3>Examiner Bank Details</h3>
-    <div id="examinerDetailsDisplay">No details available.</div>
-</div>
 
-<script>
-window.addEventListener("load", function() {
-    const examinerDetails = JSON.parse(localstorage.getItem("examinerBankDetails"));
-    const displayArea = document.getElementById("examinerDetailsDisplay");
-    
-    if (examinerDetails) {
-        displayArea.innerHTML = `
-            <p><strong>Bank Name:</strong> ${examinerDetails.bankName || 'N/A'}</p>
-            <p><strong>Account Name:</strong> ${examinerDetails.accountName || 'N/A'}</p>
-            <p><strong>Account Number:</strong> ${examinerDetails.accountNo || 'N/A'}</p>
-            <p><strong>IFSC Code:</strong> ${examinerDetails.ifscCode || 'N/A'}</p>
-            <p><strong>Branch:</strong> ${examinerDetails.branch || 'N/A'}</p>
-        `;
-    }
-});
+        window.addEventListener("load", function() {
+            const examinerDetails = JSON.parse(localStorage.getItem("examinerBankDetails"));
+            const displayArea = document.getElementById("examinerDetailsDisplay");
+            
+            if (examinerDetails && displayArea) {
+                displayArea.innerHTML = `
+                    <p><strong>Bank Name:</strong> ${examinerDetails.bankName || 'N/A'}</p>
+                    <p><strong>Account Name:</strong> ${examinerDetails.accountName || 'N/A'}</p>
+                    <p><strong>Account Number:</strong> ${examinerDetails.accountNo || 'N/A'}</p>
+                    <p><strong>IFSC Code:</strong> ${examinerDetails.ifscCode || 'N/A'}</p>
+                    <p><strong>Branch:</strong> ${examinerDetails.branch || 'N/A'}</p>
+                `;
+            }
+        });
     </script>
 </body>
 </html>
