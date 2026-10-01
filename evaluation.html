@@ -55,20 +55,21 @@
             <button class="submit-btn" type="button" onclick="submitEvaluation()">Submit Marks</button>
         </div>
     </div>
+
     <script>
         const currentTeacher = "User2601201";
-        const paper = localStorage.getItem("uploadedPaperData_" + currentTeacher);
-        document.getElementById("assignedPaperDisplay").innerText = "Assigned Teacher: " + currentTeacher + " | Paper: " + (paper ? "Paper Loaded" : "No Paper Found");
-        
         const canvas = document.getElementById("paperCanvas");
         const ctx = canvas.getContext("2d");
+        
         let currentTool = 'X';
         let xCount = 0;
         let slashCount = 0;
-        ctx.strokeStyle = "red";
-        ctx.lineWidth = 3;
-        
         let bgImg = new Image();
+
+        // Check if loading paper from uploaded dataset or a saved evaluation
+        const paper = localStorage.getItem("uploadedPaperData_" + currentTeacher);
+        document.getElementById("assignedPaperDisplay").innerText = "Assigned Teacher: " + currentTeacher + " | Paper: " + (paper ? "Paper Loaded" : "No Paper Found");
+
         if (paper) {
             bgImg.src = paper;
             bgImg.onload = function() {
@@ -92,8 +93,12 @@
 
         canvas.addEventListener("click", (e) => {
             const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+            
             drawMark(x, y);
         });
 
@@ -120,19 +125,16 @@
             document.getElementById("finalMarksDisplay").innerText = finalMarks.toFixed(1);
         }
 
-        // Function to submit evaluation and save to localStorage
         function submitEvaluation() {
             try {
-                const canvas = document.getElementById('paperCanvas');
                 const canvasImage = canvas.toDataURL("image/png");
                 const finalMarks = document.getElementById('finalMarksDisplay').textContent;
                 const evaluationId = 'eval_' + new Date().getTime();
 
-                // Retrieve bank details from localStorage if available
                 const examinerDetails = JSON.parse(localStorage.getItem("examinerBankDetails"));
 
                 const evaluationData = {
-                    teacher: "User2601201",  // Replace with dynamic examiner ID
+                    teacher: currentTeacher,
                     paper: canvasImage,
                     marks: finalMarks,
                     examinerDetails: examinerDetails 
@@ -147,8 +149,6 @@
             }
         }
 
-       // ... (previous JavaScript remains the same up to submitEvaluation)
-
         window.addEventListener("load", function() {
             const paperKey = localStorage.getItem("currentViewedPaper");
             if (paperKey) {
@@ -160,16 +160,15 @@
                     const finalMarksDisplay = document.getElementById('finalMarksDisplay');
                     if (finalMarksDisplay && evalData.marks) finalMarksDisplay.innerText = evalData.marks;
 
-                    const canvas = document.getElementById("paperCanvas");
-                    const ctx = canvas.getContext("2d");
-                    const img = new Image();
-                    img.src = evalData.paper;
-                    img.onload = function() {
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    };
+                    if (evalData.paper) {
+                        const img = new Image();
+                        img.src = evalData.paper;
+                        img.onload = function() {
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        };
+                    }
                 }
             }
-        });
         });
     </script>
 </body>
