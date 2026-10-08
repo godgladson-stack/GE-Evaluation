@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AngularJS Form Validation</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="">
+
+<h2>Student Registration</h2>
+
+<form name="studentForm" novalidate>
+Name:
+<input type="text" name="name" ng-model="name" required>
+<span ng-show="studentForm.name.$touched && studentForm.name.$invalid">Required
+</span>
+<br><br>
+
+Email:
+<input type="email" name="email" ng-model="email" required>
+<span ng-show="studentForm.email.$touched && studentForm.email.$invalid">Invalid Email
+</span>
+<br><br>
+
+Password:
+<input type="password" name="password" ng-model="password" ng-minlength="6" required>
+<span ng-show="studentForm.password.$touched && studentForm.password.$invalid">Minimum 6 characters
+</span>
+<br><br>
+
+<button type="button" ng-click="message='You are successfully registered'">Register</button>
+</form>
+
+<p>{{message}}</p>
+
+</body>
+</html>
